@@ -1,8 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
@@ -10,11 +11,22 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
-import SettingsIcon from '@material-ui/icons/Settings';
 
-export const mainListItems = (
+
+const styles = {
+  root: {
+      width: '100%',
+      overflowX: 'auto',
+  },
+  table: {
+      minWidth: 700,
+  },
+};
+
+
+const MainMenuItems = props => {
+
+  return (
   <div>
     <ListItem button>
       <ListItemIcon>
@@ -59,28 +71,11 @@ export const mainListItems = (
       <ListItemText primary="Assignment" />
     </ListItem>
   </div>
-);
+  );
+}
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Notes management</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AddIcon />
-      </ListItemIcon>
-      <ListItemText primary="Add new category" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <DeleteIcon />
-      </ListItemIcon>
-      <ListItemText primary="Delete category" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <SettingsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Settings" />
-    </ListItem>
-  </div>
-);
+MainMenuItems.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(MainMenuItems);

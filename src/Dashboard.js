@@ -14,9 +14,9 @@ import Badge from '@material-ui/core/Badge';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listMenuItems';
-//import SimpleLineChart from './SimpleLineChart';
+import MenuItems from './listMenuItems';
 import MyTable from './MyTable';
+import ManageMenu from  './listManageMenu';
 
 const drawerWidth = 240;
 
@@ -101,6 +101,8 @@ class Dashboard extends React.Component {
   state = {
     open: true,
   };
+  tableData =  this.props;
+  
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -108,6 +110,10 @@ class Dashboard extends React.Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false });
+  };
+
+  handleClickSettings = props => {
+    this.props.handleChangeTheme();
   };
 
   render() {
@@ -161,9 +167,13 @@ class Dashboard extends React.Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
+          <List>
+            <MenuItems/>
+          </List>
           <Divider />
-          <List>{secondaryListItems}</List>
+          <List>
+            <ManageMenu handleClickSettings = {this.handleClickSettings}/>
+          </List>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -171,7 +181,7 @@ class Dashboard extends React.Component {
             Items list
           </Typography>
           <div className={classes.tableContainer}>
-            <MyTable/>
+            <MyTable tableData = {this.tableData} />
           </div>
         </main>
       </div>

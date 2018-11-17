@@ -18,24 +18,10 @@ const styles = {
   },
 };
 
-let id = 0;
-function createData(name, quantity, num) {
-  id += 1;
-  return { id, name, quantity, num };
-}
 
-const data = [
-  createData('Test1', 1, 1.0),
-  createData('Test2', 2, 1.0),
-  createData('Test3', 3, 1.0),
-  createData('Test4', 4, 1.0),
-  createData('Test5', 5, 1.0),
-  createData('Test6', 6, 1.0),
-  createData('Test7', 7, 7.0),
-];
-
-function MyTable(props) {
+const MyTable = props => {
   const { classes } = props;
+  const { tableData } = props.tableData;
 
   return (
     <Paper className={classes.root}>
@@ -48,7 +34,7 @@ function MyTable(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => {
+          {tableData.map(n => {
             return (
               <TableRow key={n.id}>
                 <TableCell component="th" scope="row">
