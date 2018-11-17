@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Dashboard from './Dashboard';
 
 class App extends Component {
   render() {
@@ -13,7 +14,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
       <div className="container">
-          test
+          <Dashboard></Dashboard>
       </div>
       </MuiThemeProvider>
     );
