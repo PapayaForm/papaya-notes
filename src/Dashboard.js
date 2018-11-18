@@ -11,12 +11,16 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
+import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuItems from './listMenuItems';
 import MyTable from './MyTable';
+import LoginDialog from './LoginDialog';
 import ManageMenu from  './listManageMenu';
+import PersonIcon from '@material-ui/icons/Person';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const drawerWidth = 240;
 
@@ -98,10 +102,15 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
+  tableData =  this.props;
+  emails = this.props;
+  
   state = {
     open: true,
+    openLoginDialog: false,
+    selectedEmailValue: 'user01@gmail.com',
   };
-  tableData =  this.props;
+  
   
 
   handleDrawerOpen = () => {
@@ -114,6 +123,16 @@ class Dashboard extends React.Component {
 
   handleClickSettings = props => {
     this.props.handleChangeTheme();
+  };
+
+  handleClickPerson = () => {
+    this.setState({
+      openLoginDialog: true,
+    });
+  };
+
+  handleLoginClose = value => {
+    this.setState({ selectedEmailValue: value, openLoginDialog: false });
   };
 
   render() {
@@ -152,6 +171,20 @@ class Dashboard extends React.Component {
                 <NotificationsIcon />
               </Badge>
             </IconButton>
+            <IconButton color="inherit" onClick={() => this.handleClickSettings()}>
+              <SettingsIcon />
+            </IconButton>
+            <Tooltip title={this.state.selectedEmailValue}>
+              <IconButton color="inherit" onClick={() => this.handleClickPerson()}>
+                <PersonIcon />
+              </IconButton>
+            </Tooltip>
+            <LoginDialog
+              selectedEmailValue={this.state.selectedEmailValue}
+              open={this.state.openLoginDialog}
+              onClose={this.handleLoginClose}
+              emails={this.emails}
+            />
           </Toolbar>
         </AppBar>
         <Drawer

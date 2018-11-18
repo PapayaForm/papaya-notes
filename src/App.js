@@ -30,6 +30,11 @@ class App extends Component {
         'num': 1.7
       }
     ],
+    emails: [
+      {'email': 'user01@gmail.com'},
+      {'email': 'user02@gmail.com'}, 
+      {'email': 'user03@gmail.com'}
+    ],
     lightTheme: true,
   };
 
@@ -43,24 +48,23 @@ class App extends Component {
 
   render() {
 
-    const { tableData } = this.state;
-    const { lightTheme } = this.state;
+    const { tableData, emails, lightTheme } = this.state;
 
     const theme = lightTheme === true ? createMuiTheme({
-      palette: {
-        type: 'light',
-      },
-      typography: {
-        useNextVariants: true,
-      },
-    }) : createMuiTheme({
-      palette: {
-        type: 'dark',
-      },
-      typography: {
-        useNextVariants: true,
-      },
-    })
+        palette: {
+          type: 'light',
+        },
+        typography: {
+          useNextVariants: true,
+        },
+      }) : createMuiTheme({
+        palette: {
+          type: 'dark',
+        },
+        typography: {
+          useNextVariants: true,
+        },
+      })
 
 
     return (
@@ -69,6 +73,7 @@ class App extends Component {
           <Dashboard 
               handleChangeTheme={this.handleChangeTheme}
               tableData = { tableData }
+              emails = { emails }
             />
       </div>
       </MuiThemeProvider>
