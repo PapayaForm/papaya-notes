@@ -26,7 +26,7 @@ const ManageMenu = props => {
     return (
         <div>
             <ListSubheader inset>Notes management</ListSubheader>
-            <ListItem button>
+            <ListItem button onClick={() => props.handleClickAddCategory()}>
                 <ListItemIcon>
                     <AddIcon />
                 </ListItemIcon>

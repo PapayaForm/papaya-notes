@@ -17,10 +17,12 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MenuItems from './listMenuItems';
 import MyTable from './MyTable';
-import LoginDialog from './LoginDialog';
 import ManageMenu from  './listManageMenu';
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
+//Dialogs:
+import LoginDialog from './LoginDialog';
+import AddCategoryDialog from './AddCategoryDialog';
 
 const drawerWidth = 240;
 
@@ -108,6 +110,7 @@ class Dashboard extends React.Component {
   state = {
     open: true,
     openLoginDialog: false,
+    openAddCategoryDialog: false,
     selectedEmailValue: 'user01@gmail.com',
   };
   
@@ -121,19 +124,29 @@ class Dashboard extends React.Component {
     this.setState({ open: false });
   };
 
+
+  //#region dialog handles
   handleClickSettings = props => {
     this.props.handleChangeTheme();
   };
 
   handleClickPerson = () => {
-    this.setState({
-      openLoginDialog: true,
-    });
+    this.setState({ openLoginDialog: true, });
   };
 
   handleLoginClose = value => {
     this.setState({ selectedEmailValue: value, openLoginDialog: false });
   };
+
+  handleClickAddCategory = () => {
+    this.setState({ openAddCategoryDialog: true, });
+  };
+
+  handleAddCategoryDialogClose = () => {
+    this.setState({ openAddCategoryDialog: false, });
+  }; 
+  //#endregion dialog handles
+
 
   render() {
     const { classes } = this.props;
@@ -179,12 +192,6 @@ class Dashboard extends React.Component {
                 <PersonIcon />
               </IconButton>
             </Tooltip>
-            <LoginDialog
-              selectedEmailValue={this.state.selectedEmailValue}
-              open={this.state.openLoginDialog}
-              onClose={this.handleLoginClose}
-              emails={this.emails}
-            />
           </Toolbar>
         </AppBar>
         <Drawer
@@ -205,9 +212,24 @@ class Dashboard extends React.Component {
           </List>
           <Divider />
           <List>
-            <ManageMenu handleClickSettings = {this.handleClickSettings}/>
+            <ManageMenu 
+              handleClickSettings = {this.handleClickSettings} 
+              handleClickAddCategory = {this.handleClickAddCategory}/>
           </List>
         </Drawer>
+
+        <LoginDialog
+          selectedEmailValue={this.state.selectedEmailValue}
+          open={this.state.openLoginDialog}
+          onClose={this.handleLoginClose}
+          emails={this.emails}
+        />
+        <AddCategoryDialog
+          classes={this.classes}
+          open={this.state.openAddCategoryDialog}
+          onClose={this.handleAddCategoryDialogClose}
+        />
+
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Typography variant="h4" gutterBottom component="h2">
