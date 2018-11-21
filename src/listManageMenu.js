@@ -42,7 +42,7 @@ const ManageMenu = props => {
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
-                <ListItemText primary="Settings" />
+                <ListItemText primary="Manage" />
             </ListItem>
         </div>
     );

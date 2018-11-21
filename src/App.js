@@ -35,6 +35,15 @@ class App extends Component {
       {'email': 'user02@gmail.com'}, 
       {'email': 'user03@gmail.com'}
     ],
+    categories: [
+      {'id': 1, 'name': 'Dashboard', 'icon': 'Dashboard'},
+      {'id': 2, 'name': 'Shopping', 'icon': 'Shopping'},
+      {'id': 3, 'name': 'People', 'icon': 'People'},
+      {'id': 4, 'name': 'Reports', 'icon': 'Reports'},
+      {'id': 5, 'name': 'Calendar', 'icon': 'Calendar'},
+      {'id': 6, 'name': 'Integrations', 'icon': 'Integrations'},
+      {'id': 7, 'name': 'Assignment', 'icon': 'Assignment'},
+    ],
     lightTheme: true,
   };
 
@@ -48,7 +57,7 @@ class App extends Component {
 
   render() {
 
-    const { tableData, emails, lightTheme } = this.state;
+    const { tableData, emails, categories, lightTheme } = this.state;
 
     const theme = lightTheme === true ? createMuiTheme({
         palette: {
@@ -74,6 +83,7 @@ class App extends Component {
               handleChangeTheme={this.handleChangeTheme}
               tableData = { tableData }
               emails = { emails }
+              categories = { categories }
             />
       </div>
       </MuiThemeProvider>

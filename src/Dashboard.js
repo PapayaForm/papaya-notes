@@ -106,6 +106,7 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   tableData =  this.props;
   emails = this.props;
+  categories = this.props;
   
   state = {
     open: true,
@@ -126,6 +127,10 @@ class Dashboard extends React.Component {
 
 
   //#region dialog handles
+  handleClickCategory = value => {
+    console.log('Clicked category: ' + value);
+  };
+
   handleClickSettings = props => {
     this.props.handleChangeTheme();
   };
@@ -140,6 +145,16 @@ class Dashboard extends React.Component {
 
   handleClickAddCategory = () => {
     this.setState({ openAddCategoryDialog: true, });
+  };
+
+  handleAddCategoryDialogAddCategory = (name, icon) => {
+    if(name !== '' && icon !== '')
+    {
+      let categories = this.categories.categories;
+      categories.push({'id': categories.length + 1, 'name': name, 'icon': icon});
+      return true;
+    }
+    return false;
   };
 
   handleAddCategoryDialogClose = () => {
@@ -208,7 +223,9 @@ class Dashboard extends React.Component {
           </div>
           <Divider />
           <List>
-            <MenuItems/>
+            <MenuItems
+              handleClickCategory = {this.handleClickCategory}
+              categories = {this.categories}/>
           </List>
           <Divider />
           <List>
@@ -228,6 +245,7 @@ class Dashboard extends React.Component {
           classes={this.classes}
           open={this.state.openAddCategoryDialog}
           onClose={this.handleAddCategoryDialogClose}
+          handleAddCategoryDialogAddCategory = {this.handleAddCategoryDialogAddCategory}
         />
 
         <main className={classes.content}>

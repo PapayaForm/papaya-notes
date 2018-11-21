@@ -12,14 +12,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import CategoryIcon from './CategoryIcon';
 
 
 
@@ -46,6 +40,16 @@ class AddCategoryDialog extends React.Component {
 
   handleClose = () => {
     this.props.onClose();
+    this.setState({categoryName: ''});
+    this.setState({categoryType: ''});
+  };
+
+  handleAdd = () => {
+    if(this.props.handleAddCategoryDialogAddCategory(this.state.categoryName, this.state.categoryType) === true)
+      this.handleClose();
+    else{
+      // TODO: 
+    }
   };
 
   handleChange = event => {
@@ -53,7 +57,7 @@ class AddCategoryDialog extends React.Component {
   };
 
   render() {
-    const { classes, onClose,  ...other } = this.props;
+    const { classes, onClose, handleAddCategoryDialogAddCategory,  ...other } = this.props;
 
     return (
       <div >
@@ -82,19 +86,18 @@ class AddCategoryDialog extends React.Component {
                         <MenuItem value="">
                         <em>None</em>
                         </MenuItem>
-                        <MenuItem value={'Dashboard'}><ListItemIcon><DashboardIcon /></ListItemIcon> Dashboard</MenuItem>
-                        <MenuItem value={'Shopping'}><ListItemIcon><ShoppingCartIcon /></ListItemIcon>Shopping</MenuItem>
-                        <MenuItem value={'People'}><ListItemIcon><PeopleIcon /></ListItemIcon>People</MenuItem>
-                        <MenuItem value={'Reports'}><ListItemIcon><BarChartIcon /></ListItemIcon>Reports</MenuItem>
-                        <MenuItem value={'Calendar'}><ListItemIcon><CalendarTodayIcon /></ListItemIcon>Calendar</MenuItem>
-                        <MenuItem value={'Integrations'}><ListItemIcon><LayersIcon /></ListItemIcon>Integrations</MenuItem>
-                        <MenuItem value={'Assignment'}><ListItemIcon><AssignmentIcon /></ListItemIcon>Assignment</MenuItem>
+                        <MenuItem value={'Dashboard'}><ListItemIcon>{CategoryIcon('Dashboard')}</ListItemIcon> Dashboard</MenuItem>
+                        <MenuItem value={'Shopping'}><ListItemIcon>{CategoryIcon('Shopping')}</ListItemIcon>Shopping</MenuItem>
+                        <MenuItem value={'People'}><ListItemIcon>{CategoryIcon('People')}</ListItemIcon>People</MenuItem>
+                        <MenuItem value={'Reports'}><ListItemIcon>{CategoryIcon('Reports')}</ListItemIcon>Reports</MenuItem>
+                        <MenuItem value={'Calendar'}><ListItemIcon>{CategoryIcon('Calendar')}</ListItemIcon>Calendar</MenuItem>
+                        <MenuItem value={'Integrations'}><ListItemIcon>{CategoryIcon('Integrations')}</ListItemIcon>Integrations</MenuItem>
+                        <MenuItem value={'Assignment'}><ListItemIcon>{CategoryIcon('Assignment')}</ListItemIcon>Assignment</MenuItem>
                     </Select>
                 </FormControl>
             </form>
             <TextField
               className={classes.root}
-              autoFocus
               name={'categoryName'}
               value={this.state.categoryName}
               onChange={this.handleChange}
@@ -113,7 +116,7 @@ class AddCategoryDialog extends React.Component {
             {this.state.categoryName === '' || this.state.categoryType === '' ? (
               <Button disabled >Add Category</Button>
             ) : (
-              <Button onClick={this.handleClose} color="primary" >Add Category</Button>
+              <Button onClick={this.handleAdd} color="primary" >Add Category</Button>
             )}
           </DialogActions>
         </Dialog>
