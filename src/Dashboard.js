@@ -22,6 +22,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 //Dialogs:
 import LoginDialog from './LoginDialog';
+import SignIn from './SignIn';
 import AddCategoryDialog from './AddCategoryDialog';
 
 const drawerWidth = 240;
@@ -109,10 +110,12 @@ class Dashboard extends React.Component {
   categories = this.props;
   
   state = {
+    currentUser: this.emails.emails[0],
+    userToLogin: null,
     open: true,
     openLoginDialog: false,
+    openSignInDialog: this.emails.emails[0].password !== '',
     openAddCategoryDialog: false,
-    selectedEmailValue: 'user01@gmail.com',
   };
   
   
@@ -140,18 +143,40 @@ class Dashboard extends React.Component {
   };
 
   handleLoginClose = value => {
-    this.setState({ selectedEmailValue: value, openLoginDialog: false });
+    if(value === 'addAccount') {
+      // TODO
+    }
+    else if(value != null) {
+      if(value.password !== '') {
+        this.setState({ userToLogin: value, openSignInDialog: true });
+      }
+      else {
+        this.setState({ currentUser: value, openLoginDialog: false });
+      }
+    }
+    else
+      this.setState({ openLoginDialog: false });
+  };
+
+  handleSignInClose = () => {
+    this.setState({ userToLogin: null, openSignInDialog: false, openLoginDialog: false });
+  };
+
+  handleSignInSignedIn = value => {
+    if(value !== null)
+      this.setState({ currentUser: value });
+    this.setState({ userToLogin: null, openSignInDialog: false, openLoginDialog: false });
   };
 
   handleClickAddCategory = () => {
-    this.setState({ openAddCategoryDialog: true, });
+    this.setState({ openAddCategoryDialog: true });
   };
 
   handleAddCategoryDialogAddCategory = (name, icon) => {
     if(name !== '' && icon !== '')
     {
       let categories = this.categories.categories;
-      categories.push({'id': categories.length + 1, 'name': name, 'icon': icon});
+      categories.push({ 'id': categories.length + 1, 'name': name, 'icon': icon });
       return true;
     }
     return false;
@@ -165,6 +190,8 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
+
+    const tooltipText = this.state.currentUser !== null ? this.state.currentUser.email : '';
 
     return (
       <div className={classes.root}>
@@ -202,7 +229,7 @@ class Dashboard extends React.Component {
             <IconButton color="inherit" onClick={() => this.handleClickSettings()}>
               <SettingsIcon />
             </IconButton>
-            <Tooltip title={this.state.selectedEmailValue}>
+            <Tooltip title={tooltipText}>
               <IconButton color="inherit" onClick={() => this.handleClickPerson()}>
                 <PersonIcon />
               </IconButton>
@@ -236,10 +263,16 @@ class Dashboard extends React.Component {
         </Drawer>
 
         <LoginDialog
-          selectedEmailValue={this.state.selectedEmailValue}
+          currentUser={this.state.currentUser}
           open={this.state.openLoginDialog}
           onClose={this.handleLoginClose}
           emails={this.emails}
+        />
+        <SignIn
+          open={this.state.openSignInDialog}
+          userToLogin={this.state.userToLogin}
+          onClose={this.handleSignInClose}
+          handleSignedIn={this.handleSignInSignedIn}
         />
         <AddCategoryDialog
           classes={this.classes}

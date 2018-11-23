@@ -31,9 +31,9 @@ class App extends Component {
       }
     ],
     emails: [
-      {'email': 'user01@gmail.com'},
-      {'email': 'user02@gmail.com'}, 
-      {'email': 'user03@gmail.com'}
+      {'email': 'user01@gmail.com', 'password': ''},
+      {'email': 'user02@gmail.com', 'password': ''}, 
+      {'email': 'user03@gmail.com', 'password': 'test'}
     ],
     categories: [
       {'id': 1, 'name': 'Dashboard', 'icon': 'Dashboard'},
