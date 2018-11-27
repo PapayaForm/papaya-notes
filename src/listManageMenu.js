@@ -32,7 +32,7 @@ const ManageMenu = props => {
                 </ListItemIcon>
                 <ListItemText primary="Add new category" />
             </ListItem>
-            <ListItem button >
+            <ListItem button onClick={() => props.handleClickDeleteCategory()}>
                 <ListItemIcon>
                     <DeleteIcon />
                 </ListItemIcon>

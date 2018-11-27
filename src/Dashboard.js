@@ -24,6 +24,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import LoginDialog from './LoginDialog';
 import SignIn from './SignIn';
 import AddCategoryDialog from './AddCategoryDialog';
+import DeleteCategoryDialog from './DeleteCategoryDialog';
 
 const drawerWidth = 240;
 
@@ -116,6 +117,7 @@ class Dashboard extends React.Component {
     openLoginDialog: false,
     openSignInDialog: this.emails.emails[0].password !== '',
     openAddCategoryDialog: false,
+    openDeleteCategoryDialog: false,
   };
   
   
@@ -131,7 +133,7 @@ class Dashboard extends React.Component {
 
   //#region dialog handles
   handleClickCategory = value => {
-    console.log('Clicked category: ' + value);
+    console.log('Clicked category: ' + value.name);
   };
 
   handleClickSettings = props => {
@@ -184,6 +186,14 @@ class Dashboard extends React.Component {
 
   handleAddCategoryDialogClose = () => {
     this.setState({ openAddCategoryDialog: false, });
+  };
+
+  handleClickDeleteCategory = () => {
+    this.setState({ openDeleteCategoryDialog: true });
+  };
+
+  handleDeleteCategoryDialogClose = () => {
+    this.setState({ openDeleteCategoryDialog: false, });
   }; 
   //#endregion dialog handles
 
@@ -252,13 +262,15 @@ class Dashboard extends React.Component {
           <List>
             <MenuItems
               handleClickCategory = {this.handleClickCategory}
-              categories = {this.categories}/>
+              categories = {this.categories}
+              activeCategory = {null}/>
           </List>
           <Divider />
           <List>
             <ManageMenu 
               handleClickSettings = {this.handleClickSettings} 
-              handleClickAddCategory = {this.handleClickAddCategory}/>
+              handleClickAddCategory = {this.handleClickAddCategory}
+              handleClickDeleteCategory = {this.handleClickDeleteCategory}/>
           </List>
         </Drawer>
 
@@ -279,6 +291,12 @@ class Dashboard extends React.Component {
           open={this.state.openAddCategoryDialog}
           onClose={this.handleAddCategoryDialogClose}
           handleAddCategoryDialogAddCategory = {this.handleAddCategoryDialogAddCategory}
+        />
+        <DeleteCategoryDialog
+          classes={this.classes}
+          open={this.state.openDeleteCategoryDialog}
+          onClose={this.handleDeleteCategoryDialogClose}
+          categories = {this.categories}
         />
 
         <main className={classes.content}>
