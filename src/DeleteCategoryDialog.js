@@ -34,6 +34,11 @@ class DeleteCategoryDialog extends React.Component {
 
   handleClose = () => {
     this.props.onClose();
+    this.setState({ activeDlgCategory: null });
+  };
+
+  handleExit = () => {
+    this.setState({ activeDlgCategory: null });
   };
 
   handleDelete = () => {
@@ -72,6 +77,7 @@ class DeleteCategoryDialog extends React.Component {
       <div>
         <Dialog
           onClose={this.handleClose}
+          onExit={this.handleExit}
           scroll='paper'
           aria-labelledby="scroll-dialog-title"
           {...other}
@@ -89,7 +95,7 @@ class DeleteCategoryDialog extends React.Component {
               <Button onClick={this.handleClose} color="primary">
                 Cancel
             </Button>
-              <Button onClick={this.handleDelete} color="primary">
+              <Button onClick={this.handleDelete} disabled={this.state.activeDlgCategory === null} color="primary">
                 Delete
             </Button>
             </DialogActions>

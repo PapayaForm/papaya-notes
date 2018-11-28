@@ -8,21 +8,25 @@ import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 
 
-const CategoryIcon = icon => {
+const CategoryIcon = (icon, color) => {
+  let iconColor = 'inherit';
+  if(color !== null && color !== '')
+    iconColor = color;
+
   if (icon === 'Dashboard')
-    return (<DashboardIcon />);
+    return (<DashboardIcon color={iconColor}/>);
   else if (icon === 'Shopping')
-    return (<ShoppingCartIcon />);
+    return (<ShoppingCartIcon color={iconColor}/>);
   else if (icon === 'People')
-    return (<PeopleIcon />);
+    return (<PeopleIcon  color={iconColor}/>);
   else if (icon === 'Reports')
-    return (<BarChartIcon />);
+    return (<BarChartIcon  color={iconColor}/>);
   else if (icon === 'Calendar')
-    return (<CalendarTodayIcon />);
+    return (<CalendarTodayIcon  color={iconColor}/>);
   else if (icon === 'Integrations')
-    return (<LayersIcon />);
+    return (<LayersIcon  color={iconColor}/>);
   else if (icon === 'Assignment')
-    return (<AssignmentIcon />);
+    return (<AssignmentIcon  color={iconColor}/>);
 }
 
 export default CategoryIcon;
