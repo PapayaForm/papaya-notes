@@ -17,10 +17,6 @@ function Transition(props) {
 }
 
 class MessageBoxDialog extends React.Component {
-  state = {
-    open: false,
-  };
-
 
   handleClose = () => {
     this.props.onClose(false);
@@ -36,7 +32,6 @@ class MessageBoxDialog extends React.Component {
     return (
       <div>
         <Dialog
-          open={this.state.open}
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}

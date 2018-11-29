@@ -24,10 +24,10 @@ const MainMenuItems = props => {
 
   return (
   <div>
-    {categories.map(n => {
+    {categories.map((n, idx) => {
       return (
         <ListItem 
-          key={n.id} 
+          key={idx} 
           button onClick={() => props.handleClickCategory(n)}
           selected = {activeCategory === n ? true : false}
           >

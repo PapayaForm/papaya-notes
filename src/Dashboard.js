@@ -20,6 +20,8 @@ import MyTable from './MyTable';
 import ManageMenu from  './listManageMenu';
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
+//date
+import Category from './data/Category';
 //Dialogs:
 import LoginDialog from './LoginDialog';
 import SignIn from './SignIn';
@@ -148,8 +150,8 @@ class Dashboard extends React.Component {
     if(value === 'addAccount') {
       // TODO
     }
-    else if(value != null) {
-      if(value.password !== '') {
+    else if(value != null && value !== this.state.currentUser) {
+      if(value.isPassword === true) {
         this.setState({ userToLogin: value, openSignInDialog: true });
       }
       else {
@@ -178,7 +180,7 @@ class Dashboard extends React.Component {
     if(name !== '' && icon !== '')
     {
       let categories = this.categories.categories;
-      categories.push({ 'id': categories.length + 1, 'name': name, 'icon': icon });
+      categories.push(new Category(name, icon));
       return true;
     }
     return false;

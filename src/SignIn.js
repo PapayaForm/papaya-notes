@@ -52,7 +52,7 @@ class SignIn extends React.Component {
   }
 
   handleClickLogin = () => {
-    if(this.state.password === this.props.userToLogin.password) {
+    if( this.props.userToLogin.ValidatePassword(this.state.password) ) {
       this.setState({ password: '', passerror: false });
       this.props.handleSignedIn(this.props.userToLogin);
     }

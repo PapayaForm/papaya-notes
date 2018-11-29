@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from './Dashboard';
+import User from './data/User';
+import Category from './data/Category';
+
 
 class App extends Component {
   state = {
@@ -31,18 +34,18 @@ class App extends Component {
       }
     ],
     emails: [
-      {'email': 'user01@gmail.com', 'password': ''},
-      {'email': 'user02@gmail.com', 'password': ''}, 
-      {'email': 'user03@gmail.com', 'password': 'test'}
+      new User('user01@gmail.com', ''),
+      new User('user02@gmail.com', ''),
+      new User('user03@gmail.com', 'test')
     ],
     categories: [
-      {'id': 1, 'name': 'Dashboard', 'icon': 'Dashboard'},
-      {'id': 2, 'name': 'Shopping', 'icon': 'Shopping'},
-      {'id': 3, 'name': 'People', 'icon': 'People'},
-      {'id': 4, 'name': 'Reports', 'icon': 'Reports'},
-      {'id': 5, 'name': 'Calendar', 'icon': 'Calendar'},
-      {'id': 6, 'name': 'Integrations', 'icon': 'Integrations'},
-      {'id': 7, 'name': 'Assignment', 'icon': 'Assignment'},
+      new Category('Dashboard', 'Dashboard'),
+      new Category('Shopping', 'Shopping'),
+      new Category('People', 'People'),
+      new Category('Reports', 'Reports'),
+      new Category('Calendar', 'Calendar'),
+      new Category('Integrations', 'Integrations'),
+      new Category('Assignment', 'Assignment'),
     ],
     lightTheme: true,
   };
