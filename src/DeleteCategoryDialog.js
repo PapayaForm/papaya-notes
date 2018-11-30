@@ -56,20 +56,9 @@ class DeleteCategoryDialog extends React.Component {
       if(this.state.activeDlgCategory !== null) {
         for (var i = 0; i < this.props.categories.categories.length; i++) {
           if (this.props.categories.categories[i] === this.state.activeDlgCategory) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            this.props.categories.categories.splice(i,1);
-            this.setState({activeDlgCategory: null});
-=======
             this.props.categories.categories.splice(i, 1);
             let message = 'Category: "' + this.state.activeDlgCategory.name + '" deleted';
             this.setState({shortInfoText: message, openShortInfoMessage: true, activeDlgCategory: null});
->>>>>>> 2b26c97687cff562159d37d08b362103205f0e8a
-=======
-            this.props.categories.categories.splice(i, 1);
-            let message = 'Category: "' + this.state.activeDlgCategory.name + '" deleted';
-            this.setState({shortInfoText: message, openShortInfoMessage: true, activeDlgCategory: null});
->>>>>>> refs/remotes/origin/master
             break;
           }
         }
