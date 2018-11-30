@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MenuItems from './listMenuItems';
 import MessageBoxDialog from './MessageBoxDialog';
+import ShortInfoMessage from './ShortInfoMessage';
 
 
 
@@ -28,8 +29,10 @@ class DeleteCategoryDialog extends React.Component {
   state = {
     activeDlgCategory: null,
     openMessageBox: false,
+    openShortInfoMessage: false,
     MessageBoxTitle: '',
     MessageBoxText: '',
+    shortInfoText: '',
   };
 
   handleClose = () => {
@@ -53,9 +56,15 @@ class DeleteCategoryDialog extends React.Component {
       if(this.state.activeDlgCategory !== null) {
         for (var i = 0; i < this.props.categories.categories.length; i++) {
           if (this.props.categories.categories[i] === this.state.activeDlgCategory) {
+<<<<<<< HEAD
             this.props.categories.categories.splice(i,1);
+            this.setState({activeDlgCategory: null});
+=======
+            this.props.categories.categories.splice(i, 1);
+            let message = 'Category: "' + this.state.activeDlgCategory.name + '" deleted';
+            this.setState({shortInfoText: message, openShortInfoMessage: true, activeDlgCategory: null});
+>>>>>>> 2b26c97687cff562159d37d08b362103205f0e8a
             break;
-            // TODO : renumerate id key of categories array 
           }
         }
       }
@@ -64,6 +73,10 @@ class DeleteCategoryDialog extends React.Component {
 
     }
     this.setState({ openMessageBox: false });
+  };
+
+  handleShortInfoClose = () => {
+    this.setState({ openShortInfoMessage: false });
   };
 
   handleClickCategory = value => {
@@ -108,6 +121,12 @@ class DeleteCategoryDialog extends React.Component {
             dialogMessage={this.state.MessageBoxText}
           />
         </Dialog>
+        <ShortInfoMessage
+          classes={this.classes}
+          open={this.state.openShortInfoMessage}
+          onClose={this.handleShortInfoClose}
+          dialogMessage={this.state.shortInfoText}
+        />
       </div>
     );
   }
