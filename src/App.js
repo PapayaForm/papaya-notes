@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from './Dashboard';
 import User from './data/User';
-import Category from './data/Category';
 
 
 class App extends Component {
@@ -38,7 +37,7 @@ class App extends Component {
       new User('user02@gmail.com', ''),
       new User('user03@gmail.com', 'test')
     ],
-    categories: [
+    /*categories: [
       new Category('Dashboard', 'Dashboard'),
       new Category('Shopping', 'Shopping'),
       new Category('People', 'People'),
@@ -46,7 +45,8 @@ class App extends Component {
       new Category('Calendar', 'Calendar'),
       new Category('Integrations', 'Integrations'),
       new Category('Assignment', 'Assignment'),
-    ],
+    ],*/
+    currentUser: null,
     lightTheme: true,
   };
 
@@ -58,9 +58,14 @@ class App extends Component {
       this.setState({lightTheme: true});
   }
 
+  handleChangeUser = value => {
+    if(value !== null)
+      this.setState({currentUser: value});
+  }
+
   render() {
 
-    const { tableData, emails, categories, lightTheme } = this.state;
+    const { tableData, emails, currentUser, lightTheme } = this.state;
 
     const theme = lightTheme === true ? createMuiTheme({
         palette: {
@@ -83,10 +88,11 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
       <div className="container">
           <Dashboard 
-              handleChangeTheme={this.handleChangeTheme}
+              onChangeTheme = { this.handleChangeTheme }
+              onChangeUser = { this.handleChangeUser }
               tableData = { tableData }
               emails = { emails }
-              categories = { categories }
+              currentUser = { currentUser }
             />
       </div>
       </MuiThemeProvider>

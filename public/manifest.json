@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Notes App",
+  "name": "Papaya-Notest - notes application",
   "icons": [
     {
       "src": "favicon.ico",

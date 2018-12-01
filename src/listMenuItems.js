@@ -20,11 +20,11 @@ const styles = {
 
 const MainMenuItems = props => {
   const { activeCategory } = props;
-  const { categories } = props.categories;
+  const { categories } = props;
 
   return (
   <div>
-    {categories.map((n, idx) => {
+    {categories !== null ? categories.map((n, idx) => {
       return (
         <ListItem 
           key={idx} 
@@ -37,7 +37,7 @@ const MainMenuItems = props => {
           <ListItemText primary={n.name}/>
         </ListItem>
       );
-    })}
+    }) : ''}
   </div>
   );
 }

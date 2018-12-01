@@ -21,6 +21,9 @@ class ShortInfoMessage extends React.Component {
     this.props.onClose();
   };
 
+  handleExit = () => {
+  };
+
   render() {
     const { classes, dialogMessage, ...other } = this.props;
 
@@ -33,6 +36,7 @@ class ShortInfoMessage extends React.Component {
           }}
           autoHideDuration={6000}
           onClose={this.handleClose}
+          onExit={this.handleExit}
           ContentProps={{
             'aria-describedby': 'message-id',
           }}

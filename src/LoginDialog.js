@@ -43,7 +43,7 @@ class LoginDialog extends React.Component {
             {emails.map(n => (
               <ListItem button onClick={() => this.handleListItemClick(n)} key={n.email}>
                 <ListItemAvatar>
-                  {currentUser.email === n.email ? (
+                  {currentUser !== null && currentUser.email === n.email ? (
                       <Avatar className={classes.avatar} >
                         <PersonIcon />
                       </Avatar>

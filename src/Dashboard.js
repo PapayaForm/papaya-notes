@@ -20,13 +20,14 @@ import MyTable from './MyTable';
 import ManageMenu from  './listManageMenu';
 import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
-//date
+//data
 import Category from './data/Category';
 //Dialogs:
 import LoginDialog from './LoginDialog';
 import SignIn from './SignIn';
 import AddCategoryDialog from './AddCategoryDialog';
 import DeleteCategoryDialog from './DeleteCategoryDialog';
+import ShortInfoMessage from './ShortInfoMessage';
 
 const drawerWidth = 240;
 
@@ -110,10 +111,8 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   tableData =  this.props;
   emails = this.props;
-  categories = this.props;
   
   state = {
-    currentUser: this.emails.emails[0],
     userToLogin: null,
     activeCategory: null,
     open: true,
@@ -121,6 +120,8 @@ class Dashboard extends React.Component {
     openSignInDialog: this.emails.emails[0].password !== '',
     openAddCategoryDialog: false,
     openDeleteCategoryDialog: false,
+    openShortInfoMessage: false,
+    shortInfoText: '',
   };
   
   
@@ -135,12 +136,20 @@ class Dashboard extends React.Component {
 
 
   //#region dialog handles
+  handleShortInfoClose = () => {
+    this.setState({ openShortInfoMessage: false });
+  };
+
+  handleShortInfoOpen = message => {
+    this.setState({shortInfoText: message, openShortInfoMessage: true});
+  };
+
   handleClickCategory = value => {
     this.setState({activeCategory: value});
   };
 
-  handleClickSettings = props => {
-    this.props.handleChangeTheme();
+  handleClickSettings = () => {
+    this.props.onChangeTheme();
   };
 
   handleClickPerson = () => {
@@ -151,12 +160,13 @@ class Dashboard extends React.Component {
     if(value === 'addAccount') {
       // TODO
     }
-    else if(value != null && value !== this.state.currentUser) {
+    else if(value != null && value !== this.props.currentUser) {
       if(value.isPassword === true) {
         this.setState({ userToLogin: value, openSignInDialog: true });
       }
       else {
-        this.setState({ currentUser: value, openLoginDialog: false });
+        this.setState({ openLoginDialog: false });
+        this.props.onChangeUser(value);
       }
     }
     else
@@ -169,7 +179,7 @@ class Dashboard extends React.Component {
 
   handleSignInSignedIn = value => {
     if(value !== null)
-      this.setState({ currentUser: value });
+      this.props.onChangeUser(value);
     this.setState({ userToLogin: null, openSignInDialog: false, openLoginDialog: false });
   };
 
@@ -178,10 +188,9 @@ class Dashboard extends React.Component {
   };
 
   handleAddCategoryDialogAddCategory = (name, icon) => {
-    if(name !== '' && icon !== '')
+    if(name !== '' && icon !== '' && this.props.currentUser !== null)
     {
-      let categories = this.categories.categories;
-      categories.push(new Category(name, icon));
+      this.props.currentUser.categories.push(new Category(name, icon));
       return true;
     }
     return false;
@@ -204,7 +213,7 @@ class Dashboard extends React.Component {
   render() {
     const { classes } = this.props;
 
-    const tooltipText = this.state.currentUser !== null ? this.state.currentUser.email : '';
+    const tooltipText = this.props.currentUser !== null ? this.props.currentUser.email : '';
 
     return (
       <div className={classes.root}>
@@ -265,7 +274,7 @@ class Dashboard extends React.Component {
           <List>
             <MenuItems
               handleClickCategory = {this.handleClickCategory}
-              categories = {this.categories}
+              categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
               activeCategory = {this.state.activeCategory}/>
           </List>
           <Divider />
@@ -278,7 +287,7 @@ class Dashboard extends React.Component {
         </Drawer>
 
         <LoginDialog
-          currentUser={this.state.currentUser}
+          currentUser={this.props.currentUser}
           open={this.state.openLoginDialog}
           onClose={this.handleLoginClose}
           emails={this.emails}
@@ -293,13 +302,21 @@ class Dashboard extends React.Component {
           classes={this.classes}
           open={this.state.openAddCategoryDialog}
           onClose={this.handleAddCategoryDialogClose}
-          handleAddCategoryDialogAddCategory = {this.handleAddCategoryDialogAddCategory}
+          handleAddCategoryDialogAddCategory = {this.handleAddCategoryDialogAddCategory.bind(this)}
         />
         <DeleteCategoryDialog
           classes={this.classes}
           open={this.state.openDeleteCategoryDialog}
           onClose={this.handleDeleteCategoryDialogClose}
-          categories = {this.categories}
+          handleShortInfoMessage={this.handleShortInfoOpen}
+          categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
+        />
+
+        <ShortInfoMessage
+          classes={this.classes}
+          open={this.state.openShortInfoMessage}
+          onClose={this.handleShortInfoClose}
+          dialogMessage={this.state.shortInfoText}
         />
 
         <main className={classes.content}>
@@ -318,6 +335,10 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
+  emails: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
+  onChangeTheme: PropTypes.func.isRequired,
+  onChangeUser: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Dashboard);
