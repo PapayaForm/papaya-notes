@@ -51,10 +51,10 @@ class DeleteCategoryDialog extends React.Component {
   handleMessageBoxClose = value => {
     if(value === true) {
       if(this.state.activeDlgCategory !== null) {
-        for (var i = 0; i < this.props.categories.categories.length; i++) {
-          if (this.props.categories.categories[i] === this.state.activeDlgCategory) {
+        for (var i = 0; i < this.props.categories.length; i++) {
+          if (this.props.categories[i] === this.state.activeDlgCategory) {
             //delete elem
-            this.props.categories.categories.splice(i, 1);
+            this.props.categories.splice(i, 1);
             
             // show short message
             let message = 'Category: "' + this.state.activeDlgCategory.name + '" deleted';
