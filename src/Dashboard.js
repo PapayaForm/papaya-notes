@@ -115,8 +115,8 @@ class Dashboard extends React.Component {
   state = {
     userToLogin: null,
     activeCategory: null,
-    open: true,
-    openLoginDialog: false,
+    open: false,
+    openLoginDialog: true,
     openSignInDialog: this.emails.emails[0].password !== '',
     openAddCategoryDialog: false,
     openDeleteCategoryDialog: false,
@@ -212,8 +212,9 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     const tooltipText = this.props.currentUser !== null ? this.props.currentUser.email : '';
+
+    let dashboardText = this.state.activeCategory !== null ? this.state.activeCategory.name : "Dashboard";
 
     return (
       <div className={classes.root}>
@@ -241,7 +242,7 @@ class Dashboard extends React.Component {
               noWrap
               className={classes.title}
             >
-              Dashboard
+            {dashboardText}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
