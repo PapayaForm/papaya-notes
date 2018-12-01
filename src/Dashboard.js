@@ -277,9 +277,14 @@ class Dashboard extends React.Component {
               categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
               activeCategory = {this.state.activeCategory}/>
           </List>
+          {this.props.currentUser !== null && 
+          this.props.currentUser.categories !== null && 
+          this.props.currentUser.categories.length > 0 ? (
           <Divider />
+          ) : ('')}
           <List>
             <ManageMenu 
+              disabled={this.props.currentUser === null}
               handleClickSettings = {this.handleClickSettings} 
               handleClickAddCategory = {this.handleClickAddCategory}
               handleClickDeleteCategory = {this.handleClickDeleteCategory}/>
@@ -335,7 +340,7 @@ class Dashboard extends React.Component {
 
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
-  emails: PropTypes.object.isRequired,
+  emails: PropTypes.array.isRequired,
   currentUser: PropTypes.object,
   onChangeTheme: PropTypes.func.isRequired,
   onChangeUser: PropTypes.func.isRequired,

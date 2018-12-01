@@ -78,7 +78,7 @@ class DeleteCategoryDialog extends React.Component {
   };
 
   render() {
-    const { classes,  ...other } = this.props;
+    const { classes, handleShortInfoMessage, ...other } = this.props;
 
     return (
       <div>
@@ -122,8 +122,9 @@ class DeleteCategoryDialog extends React.Component {
 
 DeleteCategoryDialog.propTypes = {
   classes: PropTypes.object.isRequired,
-  categories: PropTypes.object.isRequired,
+  categories: PropTypes.array,
   onClose: PropTypes.func,
+  handleShortInfoMessage: PropTypes.func,
 };
 
 export default withStyles(styles)(DeleteCategoryDialog);

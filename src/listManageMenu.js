@@ -26,19 +26,19 @@ const ManageMenu = props => {
     return (
         <div>
             <ListSubheader inset>Notes management</ListSubheader>
-            <ListItem button onClick={() => props.handleClickAddCategory()}>
+            <ListItem disabled={props.disabled} button onClick={() => props.handleClickAddCategory()}>
                 <ListItemIcon>
                     <AddIcon />
                 </ListItemIcon>
                 <ListItemText primary="Add new category" />
             </ListItem>
-            <ListItem button onClick={() => props.handleClickDeleteCategory()}>
+            <ListItem disabled={props.disabled} button onClick={() => props.handleClickDeleteCategory()}>
                 <ListItemIcon>
                     <DeleteIcon />
                 </ListItemIcon>
                 <ListItemText primary="Delete category" />
             </ListItem>
-            <ListItem button onClick={() => props.handleClickSettings()}>
+            <ListItem disabled={props.disabled} button onClick={() => props.handleClickSettings()}>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
