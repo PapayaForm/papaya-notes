@@ -1,13 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
+import CategoryDraw from "./data/CategoryDraw";
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
   root: {
@@ -17,55 +13,53 @@ const styles = theme => ({
   table: {
     minWidth: 700,
   },
-  tableContainer: {
-    height: 320,
+  fab: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
+    //bottom: theme.spacing.unit * 2,
+    //right: theme.spacing.unit * 2,
   },
 });
 
 
 class MyTable extends React.Component {
 
+  state = {
+    refresh: true}
+
+  handleAddItem = () => {
+    if(this.props.activeCategory !== null) {
+      this.props.activeCategory.AddData('ala', 'makota makota');
+      this.setState({refresh: !this.state.refresh});
+    }
+  }
+
+  handleRemoveItem = idx => {
+    if(this.props.activeCategory !== null) {
+      this.props.activeCategory.DeleteData(idx);
+      this.setState({refresh: !this.state.refresh});
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
-    let out = '';
-    if(this.props.activeCategory !== null)
-      out = this.props.activeCategory.DrawPage(this.props);
-    
-    if(out !== '') return out;
+    if (this.props.activeCategory === null) return null;
     else return (
       <div>
-        <Typography variant="h4" gutterBottom component="h2">
-          Items list
-        </Typography>
-        <div className={classes.tableContainer}>
-          <Paper className={classes.root}>
-            <Table className={classes.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell numeric>Quantity</TableCell>
-                  <TableCell numeric>Num</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {this.props.tableData.map(n => {
-                  return (
-                    <TableRow key={n.id}>
-                      <TableCell component="th" scope="row">
-                        {n.name}
-                      </TableCell>
-                      <TableCell numeric>{n.quantity}</TableCell>
-                      <TableCell numeric>{n.num}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-        </div>
+        <CategoryDraw classes={classes} activeCategory={this.props.activeCategory} removeItem={this.handleRemoveItem}/>
+        <Fab
+          className={classes.fab}
+          onClick={this.handleAddItem}
+          color='primary'>
+          <AddIcon />
+        </Fab>
       </div>
-    );
+    )
   }
 }
 

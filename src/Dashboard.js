@@ -158,6 +158,7 @@ class Dashboard extends React.Component {
       else {
         this.setState({ openLoginDialog: false });
         this.props.onChangeUser(value);
+        this.setState({activeCategory: null});
       }
     }
     else
@@ -169,8 +170,10 @@ class Dashboard extends React.Component {
   };
 
   handleSignInSignedIn = value => {
-    if(value !== null)
+    if(value !== null) {
       this.props.onChangeUser(value);
+      this.setState({activeCategory: null});
+    }
     this.setState({ userToLogin: null, openSignInDialog: false, openLoginDialog: false });
   };
 

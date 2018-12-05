@@ -32,22 +32,12 @@ class Category {
         }
     }
 
-    DrawPage(props) {
-        switch(this.type) {
-            case CategoriesEnum.eDashboard:
-                return '';
-            case CategoriesEnum.eShopping:
-                return ShoppingData.DrawPage(props, this.dataItems);
-            case CategoriesEnum.ePeople:
-            case CategoriesEnum.eReports:
-            case CategoriesEnum.eCalendar:
-            case CategoriesEnum.eIntegrations:
-            case CategoriesEnum.eAssignment:
-                return '';
-            default:
-                return '';
+    DeleteData(idx) {
+        if(idx >= 0 && idx < this.dataItems.length) {
+            this.dataItems.splice(idx, 1);
         }
     }
 }
+
 
 export default Category;
