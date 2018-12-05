@@ -6,27 +6,32 @@ import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import {CategoriesEnum} from './data/CategoriesEnum';
 
 
-const CategoryIcon = (icon, color) => {
+const CategoryIcon = (type, color) => {
   let iconColor = 'inherit';
   if(color !== null && color !== '')
     iconColor = color;
 
-  if (icon === 'Dashboard')
-    return (<DashboardIcon color={iconColor}/>);
-  else if (icon === 'Shopping')
-    return (<ShoppingCartIcon color={iconColor}/>);
-  else if (icon === 'People')
-    return (<PeopleIcon  color={iconColor}/>);
-  else if (icon === 'Reports')
-    return (<BarChartIcon  color={iconColor}/>);
-  else if (icon === 'Calendar')
-    return (<CalendarTodayIcon  color={iconColor}/>);
-  else if (icon === 'Integrations')
-    return (<LayersIcon  color={iconColor}/>);
-  else if (icon === 'Assignment')
-    return (<AssignmentIcon  color={iconColor}/>);
+  switch(type) {
+    case CategoriesEnum.eDashboard:
+      return (<DashboardIcon color={iconColor}/>);
+    case CategoriesEnum.eShopping:
+      return (<ShoppingCartIcon color={iconColor}/>);
+    case  CategoriesEnum.ePeople:
+      return (<PeopleIcon  color={iconColor}/>);
+    case CategoriesEnum.eReports:
+      return (<BarChartIcon  color={iconColor}/>);
+    case CategoriesEnum.eCalendar:
+      return (<CalendarTodayIcon  color={iconColor}/>);
+    case CategoriesEnum.eIntegrations:
+      return (<LayersIcon  color={iconColor}/>);
+    case CategoriesEnum.eAssignment:
+      return (<AssignmentIcon  color={iconColor}/>);
+    default:
+      return '';
+  }
 }
 
 export default CategoryIcon;

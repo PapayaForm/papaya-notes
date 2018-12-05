@@ -32,7 +32,7 @@ const MainMenuItems = props => {
           selected = {activeCategory === n ? true : false}
           >
           <ListItemIcon>
-            {activeCategory === n ? (CategoryIcon(n.icon, 'inherit')) : (CategoryIcon(n.icon, null))}
+            {activeCategory === n ? (CategoryIcon(n.type, 'inherit')) : (CategoryIcon(n.type, null))}
           </ListItemIcon>
           <ListItemText primary={n.name}/>
         </ListItem>

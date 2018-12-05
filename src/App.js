@@ -37,15 +37,6 @@ class App extends Component {
       new User('user02@gmail.com', ''),
       new User('user03@gmail.com', 'test')
     ],
-    /*categories: [
-      new Category('Dashboard', 'Dashboard'),
-      new Category('Shopping', 'Shopping'),
-      new Category('People', 'People'),
-      new Category('Reports', 'Reports'),
-      new Category('Calendar', 'Calendar'),
-      new Category('Integrations', 'Integrations'),
-      new Category('Assignment', 'Assignment'),
-    ],*/
     currentUser: null,
     lightTheme: true,
   };

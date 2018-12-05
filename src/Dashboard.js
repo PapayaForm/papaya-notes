@@ -22,6 +22,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import SettingsIcon from '@material-ui/icons/Settings';
 //data
 import Category from './data/Category';
+import {ValidateCategory} from './data/CategoriesEnum';
 //Dialogs:
 import LoginDialog from './LoginDialog';
 import SignIn from './SignIn';
@@ -97,26 +98,16 @@ const styles = theme => ({
     height: '100vh',
     overflow: 'auto',
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
-  h5: {
-    marginBottom: theme.spacing.unit * 2,
-  },
 });
 
 class Dashboard extends React.Component {
-  tableData =  this.props;
   emails = this.props;
   
   state = {
     userToLogin: null,
     activeCategory: null,
-    open: true,
-    openLoginDialog: false,
+    open: false,
+    openLoginDialog: true,
     openSignInDialog: this.emails.emails[0].password !== '',
     openAddCategoryDialog: false,
     openDeleteCategoryDialog: false,
@@ -187,10 +178,10 @@ class Dashboard extends React.Component {
     this.setState({ openAddCategoryDialog: true });
   };
 
-  handleAddCategoryDialogAddCategory = (name, icon) => {
-    if(name !== '' && icon !== '' && this.props.currentUser !== null)
+  handleAddCategoryDialogAddCategory = (name, type) => {
+    if(name !== '' && ValidateCategory(type) && this.props.currentUser !== null)
     {
-      this.props.currentUser.categories.push(new Category(name, icon));
+      this.props.currentUser.categories.push(new Category(name, type));
       return true;
     }
     return false;
@@ -212,8 +203,9 @@ class Dashboard extends React.Component {
 
   render() {
     const { classes } = this.props;
-
     const tooltipText = this.props.currentUser !== null ? this.props.currentUser.email : '';
+
+    let dashboardText = this.state.activeCategory !== null ? this.state.activeCategory.name : "Dashboard";
 
     return (
       <div className={classes.root}>
@@ -241,7 +233,7 @@ class Dashboard extends React.Component {
               noWrap
               className={classes.title}
             >
-              Dashboard
+            {dashboardText}
             </Typography>
             <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -326,12 +318,10 @@ class Dashboard extends React.Component {
 
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            Items list
-          </Typography>
-          <div className={classes.tableContainer}>
-            <MyTable tableData = {this.tableData} />
-          </div>
+          <MyTable 
+            classes={this.classes}
+            tableData = {this.props.tableData} 
+            activeCategory = {this.state.activeCategory}/>
         </main>
       </div>
     );
