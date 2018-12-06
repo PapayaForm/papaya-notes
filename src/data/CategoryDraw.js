@@ -4,6 +4,12 @@ import { CategoriesEnum } from './CategoriesEnum';
 
 
 class CategoryDraw extends React.Component {
+
+    handleMoveElemInArray = (oldIndex, newIndex) => {
+        this.props.activeCategory.MoveDataItem(oldIndex, newIndex);
+        this.props.forceTableRefresh();
+    }
+
     render() {
         const { classes } = this.props;
 
@@ -15,7 +21,8 @@ class CategoryDraw extends React.Component {
                     <ShoppingDataDraw 
                         classes={classes} 
                         tableData={this.props.activeCategory.dataItems} 
-                        removeItem={this.props.removeItem}/>
+                        removeItem={this.props.removeItem}
+                        moveElemInArray={this.handleMoveElemInArray}/>
                 ); 
             case CategoriesEnum.ePeople:
             case CategoriesEnum.eReports:

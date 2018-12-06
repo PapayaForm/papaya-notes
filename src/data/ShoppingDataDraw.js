@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 
 const styles = () => ({
     root: {
@@ -15,46 +16,63 @@ const styles = () => ({
       overflowX: 'auto',
     },
     table: {
-      minWidth: 700,
+      minWidth: '90%',
     },
     tableContainer: {
         height: 320,
       },
-    fab:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
+    fabAdd:{}, fabStore:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
   });
 
+const SortableTableRow = SortableElement(({idx, row, removeItem, classes}) => {
+    return (
+        <TableRow >
+            <TableCell>{row.name}</TableCell>
+            <TableCell>{row.desc}</TableCell>
+            <TableCell>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    className={classes.button}
+                    onClick={() => removeItem(idx)}>
+                    Delete
+                <DeleteIcon className={classes.rightIcon} />
+                </Button>
+            </TableCell>
+        </TableRow>
+      );
+  }
+)
 
-const ShoppingElementsList = props => {
-    const classes = props;
-    const rows = props.tableData.map((row, index) => {
+
+const ShoppingElementsList = SortableContainer(({tableData, classes, removeItem}) => {
+    const rows = tableData.map((row, index) => {
         return (
-            <TableRow key={index}>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.desc}</TableCell>
-                <TableCell>
-                    <Button 
-                        variant="contained" 
-                        color="secondary" 
-                        className={classes.button} 
-                        onClick={() => props.removeItem(index)}>
-                        Delete
-                        <DeleteIcon className={classes.rightIcon} />
-                    </Button>
-                </TableCell>
-            </TableRow>
+            <SortableTableRow 
+                key={`item-${index}`} 
+                index={index}
+                idx={index} 
+                row={row} 
+                removeItem={removeItem} 
+                classes={classes}/>
         );
     });
 
     return <TableBody>{rows}</TableBody>;
-}
+});
 
 
 class ShoppingDataDraw extends React.Component {
+
+    onSortEnd = ({oldIndex, newIndex}) => {
+        this.props.moveElemInArray(oldIndex, newIndex);
+      };
+
     render() {
         const { classes } = this.props;
 
         return (
-            <div className={classes.tableContainer}>
+            <div >
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>
@@ -65,13 +83,18 @@ class ShoppingDataDraw extends React.Component {
                             </TableRow>
                         </TableHead>
 
-                        <ShoppingElementsList tableData={this.props.tableData} removeItem={this.props.removeItem}/>
-
+                        <ShoppingElementsList 
+                            pressDelay={200}
+                            classes={classes}
+                            tableData={this.props.tableData} 
+                            removeItem={this.props.removeItem}
+                            onSortEnd={this.onSortEnd}/>
                     </Table>
                 </Paper>
             </div>
         );
     }
 }
+
 
 export default withStyles(styles)(ShoppingDataDraw);

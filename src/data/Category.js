@@ -1,5 +1,6 @@
 import ShoppingData from './ShoppingData';
 import {CategoriesEnum} from './CategoriesEnum'
+import {arrayMove} from 'react-sortable-hoc';
 
 
 class Category {
@@ -36,6 +37,11 @@ class Category {
         if(idx >= 0 && idx < this.dataItems.length) {
             this.dataItems.splice(idx, 1);
         }
+    }
+
+    MoveDataItem(oldIndex, newIndex) {
+        let tmpArray = arrayMove(this.dataItems, oldIndex, newIndex);
+        this.dataItems = tmpArray;
     }
 }
 
