@@ -18,15 +18,20 @@ const styles = () => ({
     table: {
       minWidth: '90%',
     },
+    disableSelect: {
+        MozUserSelect: 'none',
+        WebkitUserSelect: 'none',
+        msUserSelect: 'none'
+    },
     tableContainer: {
         height: 320,
-      },
+    },
     fabAdd:{}, fabStore:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
   });
 
 const SortableTableRow = SortableElement(({idx, row, removeItem, classes}) => {
     return (
-        <TableRow >
+        <TableRow className={classes.disableSelect}>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.desc}</TableCell>
             <TableCell>
@@ -76,7 +81,7 @@ class ShoppingDataDraw extends React.Component {
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                         <TableHead>
-                            <TableRow>
+                            <TableRow className={classes.disableSelect}>
                                 <TableCell>Name</TableCell>
                                 <TableCell>Description</TableCell>
                                 <TableCell>Remove</TableCell>
