@@ -1,4 +1,5 @@
 import React from 'react';
+import DashboardDataDraw from './DashboardDataDraw';
 import ShoppingDataDraw from './ShoppingDataDraw';
 import { CategoriesEnum } from './CategoriesEnum';
 
@@ -15,7 +16,13 @@ class CategoryDraw extends React.Component {
 
         switch (this.props.activeCategory.type) {
             case CategoriesEnum.eDashboard:
-                return null;
+                return (
+                    <DashboardDataDraw 
+                        classes={classes} 
+                        tableData={this.props.activeCategory.dataItems} 
+                        removeItem={this.props.removeItem}
+                        moveElemInArray={this.handleMoveElemInArray}/>
+                );
             case CategoriesEnum.eShopping:
                 return (
                     <ShoppingDataDraw 

@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {CategoriesEnum} from './data/CategoriesEnum';
 import CategoryIcon from './CategoryIcon';
+import {ValidateCategory} from './data/CategoriesEnum';
 
 
 
@@ -31,6 +32,11 @@ const styles = theme => ({
       },
   });
 
+const MenuItemForCategory = (categoryEnum, categoryName) => {
+  return (
+    <MenuItem value={categoryEnum} disabled={!ValidateCategory(categoryEnum)}><ListItemIcon>{CategoryIcon(categoryEnum)}</ListItemIcon> {categoryName}</MenuItem>
+  );
+}
 
 class AddCategoryDialog extends React.Component {
 
@@ -87,13 +93,13 @@ class AddCategoryDialog extends React.Component {
                         <MenuItem value="">
                         <em>None</em>
                         </MenuItem>
-                        <MenuItem value={CategoriesEnum.eDashboard}><ListItemIcon>{CategoryIcon(CategoriesEnum.eDashboard)}</ListItemIcon> Dashboard</MenuItem>
-                        <MenuItem value={CategoriesEnum.eShopping}><ListItemIcon>{CategoryIcon(CategoriesEnum.eShopping)}</ListItemIcon>Shopping</MenuItem>
-                        <MenuItem value={CategoriesEnum.ePeople}><ListItemIcon>{CategoryIcon(CategoriesEnum.ePeople)}</ListItemIcon>People</MenuItem>
-                        <MenuItem value={CategoriesEnum.eReports}><ListItemIcon>{CategoryIcon(CategoriesEnum.eReports)}</ListItemIcon>Reports</MenuItem>
-                        <MenuItem value={CategoriesEnum.eCalendar}><ListItemIcon>{CategoryIcon(CategoriesEnum.eCalendar)}</ListItemIcon>Calendar</MenuItem>
-                        <MenuItem value={CategoriesEnum.eIntegrations}><ListItemIcon>{CategoryIcon(CategoriesEnum.eIntegrations)}</ListItemIcon>Integrations</MenuItem>
-                        <MenuItem value={CategoriesEnum.eAssignment}><ListItemIcon>{CategoryIcon(CategoriesEnum.eAssignment)}</ListItemIcon>Assignment</MenuItem>
+                        {MenuItemForCategory(CategoriesEnum.eDashboard, 'Dashboard')}
+                        {MenuItemForCategory(CategoriesEnum.eShopping, 'Shopping')}
+                        {MenuItemForCategory(CategoriesEnum.ePeople, 'People')}
+                        {MenuItemForCategory(CategoriesEnum.eReports, 'Reports')}
+                        {MenuItemForCategory(CategoriesEnum.eCalendar, 'Calendar')}
+                        {MenuItemForCategory(CategoriesEnum.eIntegrations, 'Integrations')}
+                        {MenuItemForCategory(CategoriesEnum.eAssignment, 'Assignment')}
                     </Select>
                 </FormControl>
             </form>

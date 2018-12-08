@@ -1,3 +1,4 @@
+import DashboardData from './DashboardData';
 import ShoppingData from './ShoppingData';
 import {CategoriesEnum} from './CategoriesEnum'
 import {arrayMove} from 'react-sortable-hoc';
@@ -15,6 +16,7 @@ class Category {
         let data = null;
         switch(this.type) {
             case CategoriesEnum.eDashboard:
+                data = new DashboardData(name, desc);
                 break;
             case CategoriesEnum.eShopping:
                 data = new ShoppingData(name, desc);

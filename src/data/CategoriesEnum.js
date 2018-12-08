@@ -14,12 +14,13 @@ const ValidateCategory = value => {
     switch(value) {
         case CategoriesEnum.eDashboard:
         case CategoriesEnum.eShopping:
+            return true;
         case CategoriesEnum.ePeople:
         case CategoriesEnum.eReports:
         case CategoriesEnum.eCalendar:
         case CategoriesEnum.eIntegrations:
         case CategoriesEnum.eAssignment:
-            return true;
+            return false;
         default:
             return false;
         }
