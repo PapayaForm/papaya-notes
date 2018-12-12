@@ -29,6 +29,7 @@ import SignIn from './SignIn';
 import AddCategoryDialog from './AddCategoryDialog';
 import DeleteCategoryDialog from './DeleteCategoryDialog';
 import ShortInfoMessage from './ShortInfoMessage';
+import CreateUserDialog from './CreateUserDialog';
 
 const drawerWidth = 240;
 
@@ -101,15 +102,15 @@ const styles = theme => ({
 });
 
 class Dashboard extends React.Component {
-  emails = this.props;
   
   state = {
     userToLogin: null,
     activeCategory: null,
     open: false,
     openLoginDialog: true,
-    openSignInDialog: this.emails.emails[0].password !== '',
+    openSignInDialog: false,
     openAddCategoryDialog: false,
+    openCreateUserDialog: false,
     openDeleteCategoryDialog: false,
     openShortInfoMessage: false,
     shortInfoText: '',
@@ -149,7 +150,7 @@ class Dashboard extends React.Component {
 
   handleLoginClose = value => {
     if(value === 'addAccount') {
-      // TODO
+      this.setState({ openCreateUserDialog: true, });
     }
     else if(value != null && value !== this.props.currentUser) {
       if(value.isPassword === true) {
@@ -201,6 +202,10 @@ class Dashboard extends React.Component {
   handleDeleteCategoryDialogClose = () => {
     this.setState({ openDeleteCategoryDialog: false, });
   }; 
+
+  handleCreateUserDialogClose = () => {
+    this.setState({ openCreateUserDialog: false, });
+  };
   //#endregion dialog handles
 
 
@@ -238,7 +243,7 @@ class Dashboard extends React.Component {
             >
             {dashboardText}
             </Typography>
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={() => this.props.handleClearStorage()}>
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -290,13 +295,18 @@ class Dashboard extends React.Component {
           currentUser={this.props.currentUser}
           open={this.state.openLoginDialog}
           onClose={this.handleLoginClose}
-          emails={this.emails}
+          emails={this.props.emails}
         />
         <SignIn
           open={this.state.openSignInDialog}
           userToLogin={this.state.userToLogin}
           onClose={this.handleSignInClose}
           handleSignedIn={this.handleSignInSignedIn}
+        />
+        <CreateUserDialog
+          open={this.state.openCreateUserDialog}
+          onClose={this.handleCreateUserDialogClose}
+          handleCreateUser={this.props.handleCreateUser}
         />
         <AddCategoryDialog
           classes={this.classes}
@@ -323,7 +333,6 @@ class Dashboard extends React.Component {
           <div className={classes.appBarSpacer} />
           <MyTable 
             classes={this.classes}
-            tableData = {this.props.tableData} 
             activeCategory = {this.state.activeCategory}/>
         </main>
       </div>
@@ -335,6 +344,8 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
   emails: PropTypes.array.isRequired,
   currentUser: PropTypes.object,
+  handleCreateUser: PropTypes.func.isRequired,
+  handleClearStorage: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,
   onChangeUser: PropTypes.func.isRequired,
 };

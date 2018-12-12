@@ -33,14 +33,13 @@ class LoginDialog extends React.Component {
 
   render() {
     const { classes, onClose, currentUser,  ...other } = this.props;
-    const { emails } = this.props.emails;
 
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">Select user</DialogTitle>
         <div>
           <List>
-            {emails.map(n => (
+            {this.props.emails.map(n => (
               <ListItem button onClick={() => this.handleListItemClick(n)} key={n.email}>
                 <ListItemAvatar>
                   {currentUser !== null && currentUser.email === n.email ? (
@@ -75,6 +74,7 @@ LoginDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
   currentUser: PropTypes.object,
+  emails: PropTypes.array.isRequired,
 };
 
 export default withStyles(styles)(LoginDialog);

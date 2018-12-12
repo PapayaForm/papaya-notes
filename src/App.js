@@ -2,41 +2,12 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from './Dashboard';
 import User from './data/User';
+//import SimpleStorage, { clearStorage } from "react-simple-storage";
 
 
 class App extends Component {
   state = {
-    tableData: [
-      {
-        'id': 1,
-        'name': 'Test1',
-        'quantity': 1,
-        'num': 1.0
-      },
-      {
-        'id': 2,
-        'name': 'Test2',
-        'quantity': 2,
-        'num': 2.0
-      },
-      {
-        'id': 3,
-        'name': 'Test3',
-        'quantity': 3,
-        'num': 1.3
-      },
-      {
-        'id': 4,
-        'name': 'Test4',
-        'quantity': 4,
-        'num': 1.7
-      }
-    ],
-    emails: [
-      new User('user01@gmail.com', ''),
-      new User('user02@gmail.com', ''),
-      new User('user03@gmail.com', 'test')
-    ],
+    emails: [],
     currentUser: null,
     lightTheme: true,
   };
@@ -54,9 +25,22 @@ class App extends Component {
       this.setState({currentUser: value});
   }
 
+  handleCreateUser = (user, password) => {
+    if(user !== '') {
+      this.setState(prevState => ({
+        emails: [...prevState.emails, new User(user, password)]
+      }))
+    }
+    return true;
+  }
+
+  handleClearStorage = () => {
+//    clearStorage();
+  }
+
   render() {
 
-    const { tableData, emails, currentUser, lightTheme } = this.state;
+    const { emails, currentUser, lightTheme } = this.state;
 
     const theme = lightTheme === true ? createMuiTheme({
         palette: {
@@ -74,14 +58,17 @@ class App extends Component {
         },
       })
 
+    // add <SimpleStorage parent={this} /> to save state
 
     return (
       <MuiThemeProvider theme={theme}>
       <div className="container">
+          
           <Dashboard 
               onChangeTheme = { this.handleChangeTheme }
               onChangeUser = { this.handleChangeUser }
-              tableData = { tableData }
+              handleCreateUser = { this.handleCreateUser }
+              handleClearStorage = { this.handleClearStorage }
               emails = { emails }
               currentUser = { currentUser }
             />

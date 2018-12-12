@@ -99,7 +99,6 @@ class MyTable extends React.Component {
 
 MyTable.propTypes = {
   classes: PropTypes.object.isRequired,
-  tableData: PropTypes.array.isRequired,
   activeCategory: PropTypes.object,
 };
 
