@@ -201,7 +201,22 @@ class Dashboard extends React.Component {
 
   handleDeleteCategoryDialogClose = () => {
     this.setState({ openDeleteCategoryDialog: false, });
-  }; 
+  };
+
+  handleDeleteCategory = categoryToDelete => {
+    for (var i = 0; i < this.props.currentUser.categories.length; i++) {
+      if (this.props.currentUser.categories[i] === categoryToDelete) {
+        //delete elem
+        this.props.currentUser.categories.splice(i, 1);
+
+        if(this.state.activeCategory === categoryToDelete)
+          this.setState({ activeCategory: null });
+        
+        return true;
+      }
+    }
+    return false;
+  }
 
   handleCreateUserDialogClose = () => {
     this.setState({ openCreateUserDialog: false, });
@@ -319,6 +334,7 @@ class Dashboard extends React.Component {
           open={this.state.openDeleteCategoryDialog}
           onClose={this.handleDeleteCategoryDialogClose}
           handleShortInfoMessage={this.handleShortInfoOpen}
+          handleDeleteCategory={this.handleDeleteCategory}
           categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
         />
 
