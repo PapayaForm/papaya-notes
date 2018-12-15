@@ -72,7 +72,7 @@ class DeleteCategoryDialog extends React.Component {
   };
 
   render() {
-    const { classes, handleShortInfoMessage, ...other } = this.props;
+    const { classes, handleShortInfoMessage, handleDeleteCategory, ...other } = this.props;
 
     return (
       <div>
