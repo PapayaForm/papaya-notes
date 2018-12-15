@@ -300,6 +300,7 @@ class Dashboard extends React.Component {
           <List>
             <ManageMenu 
               disabled={this.props.currentUser === null}
+              disabledDelete={this.props.currentUser === null || this.props.currentUser.categories.length === 0}
               handleClickSettings = {this.handleClickSettings} 
               handleClickAddCategory = {this.handleClickAddCategory}
               handleClickDeleteCategory = {this.handleClickDeleteCategory}/>

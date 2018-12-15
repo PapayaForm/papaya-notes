@@ -19,7 +19,6 @@ const styles = {
 
 
 const ManageMenu = props => {
-
     return (
         <div>
             <ListSubheader inset>Notes management</ListSubheader>
@@ -29,7 +28,7 @@ const ManageMenu = props => {
                 </ListItemIcon>
                 <ListItemText primary="Add new category" />
             </ListItem>
-            <ListItem disabled={props.disabled} button onClick={() => props.handleClickDeleteCategory()}>
+            <ListItem disabled={props.disabledDelete} button onClick={() => props.handleClickDeleteCategory()}>
                 <ListItemIcon>
                     <DeleteIcon />
                 </ListItemIcon>
@@ -47,6 +46,12 @@ const ManageMenu = props => {
 
 ManageMenu.propTypes = {
     classes: PropTypes.object.isRequired,
+    disabled: PropTypes.bool,
+    disabledDelete: PropTypes.bool,
+    handleClickAddCategory: PropTypes.func.isRequired,
+    handleClickDeleteCategory: PropTypes.func.isRequired,
+    handleClickSettings: PropTypes.func.isRequired,
+
 };
 
 export default withStyles(styles)(ManageMenu);

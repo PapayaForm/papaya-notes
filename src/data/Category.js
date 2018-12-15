@@ -45,6 +45,19 @@ class Category {
         let tmpArray = arrayMove(this.dataItems, oldIndex, newIndex);
         this.dataItems = tmpArray;
     }
+
+    static SerializeFromStorage(objectState) {
+        let objectToInstantiate = null;
+        if(objectState) {
+            objectToInstantiate = new Category(objectState.name, objectState.type);
+            if(objectState.dataItems && objectState.dataItems.length > 0) {
+                for (let i = 0; i < objectState.dataItems.length; i++) {
+                    objectToInstantiate.AddData(objectState.dataItems[i].name, objectState.dataItems[i].desc);
+                }
+            }
+        }
+        return objectToInstantiate;
+    }
 }
 
 

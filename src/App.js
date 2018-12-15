@@ -2,15 +2,25 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from './Dashboard';
 import User from './data/User';
-//import SimpleStorage, { clearStorage } from "react-simple-storage";
+import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-storage";
 
 
 class App extends Component {
-  state = {
-    emails: [],
-    currentUser: null,
-    lightTheme: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      emails: [],
+      currentUser: null,
+      lightTheme: true,
+      refresh: false,
+    };
+     // store the component's initial state to reset it
+     this.initialState = this.state;
+  }
+
+  forceRefresh = () => {
+    this.setState({refresh: !this.state.refresh});
+  }
 
   handleChangeTheme = () => {
     const { lightTheme } = this.state;
@@ -35,7 +45,27 @@ class App extends Component {
   }
 
   handleClearStorage = () => {
-//    clearStorage();
+    console.log('clearStorage Called.');
+    
+    //clearStorage(null);
+    resetParentState(this, this.initialState, []);
+    
+
+    this.forceRefresh();
+  }
+
+  handleParentStateHydrated = () => {
+    let emails = [];
+    let currentUser = null
+
+    if(this.state.emails && this.state.emails.length > 0) {
+      for(let i = 0; i < this.state.emails.length; i++) {
+        emails.push(User.SerializeFromStorage(this.state.emails[i]));
+      }
+    }
+    currentUser = User.SerializeFromStorage(this.state.currentUser);
+
+    this.setState({ emails: emails, currentUser: currentUser });
   }
 
   render() {
@@ -63,7 +93,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
       <div className="container">
-          
+          <SimpleStorage parent={this} onParentStateHydrated={this.handleParentStateHydrated}/>
           <Dashboard 
               onChangeTheme = { this.handleChangeTheme }
               onChangeUser = { this.handleChangeUser }
