@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       emails: [],
       currentUser: null,
+      activeCategory: null,
       lightTheme: true,
       refresh: false,
     };
@@ -33,6 +34,11 @@ class App extends Component {
   handleChangeUser = value => {
     if(value !== null)
       this.setState({currentUser: value});
+  }
+
+  handleChangeActiveCategory = value => {
+    if(value !== null)
+      this.setState({activeCategory: value});
   }
 
   handleCreateUser = (user, password) => {
@@ -70,7 +76,7 @@ class App extends Component {
 
   render() {
 
-    const { emails, currentUser, lightTheme } = this.state;
+    const { emails, currentUser, activeCategory, lightTheme } = this.state;
 
     const theme = lightTheme === true ? createMuiTheme({
         palette: {
@@ -97,10 +103,12 @@ class App extends Component {
           <Dashboard 
               onChangeTheme = { this.handleChangeTheme }
               onChangeUser = { this.handleChangeUser }
+              onChangeActiveCategory = { this.handleChangeActiveCategory }
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
               emails = { emails }
               currentUser = { currentUser }
+              activeCategory = { activeCategory }
             />
       </div>
       </MuiThemeProvider>

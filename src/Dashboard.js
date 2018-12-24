@@ -105,7 +105,6 @@ class Dashboard extends React.Component {
   
   state = {
     userToLogin: null,
-    activeCategory: null,
     open: false,
     openLoginDialog: true,
     openSignInDialog: false,
@@ -133,11 +132,11 @@ class Dashboard extends React.Component {
   };
 
   handleShortInfoOpen = message => {
-    this.setState({shortInfoText: message, openShortInfoMessage: true});
+    this.setState({ shortInfoText: message, openShortInfoMessage: true });
   };
 
   handleClickCategory = value => {
-    this.setState({activeCategory: value});
+    this.props.onChangeActiveCategory(value);
   };
 
   handleClickSettings = () => {
@@ -159,7 +158,7 @@ class Dashboard extends React.Component {
       else {
         this.setState({ openLoginDialog: false });
         this.props.onChangeUser(value);
-        this.setState({activeCategory: null});
+        this.props.onChangeActiveCategory(null);
       }
     }
     else
@@ -173,7 +172,7 @@ class Dashboard extends React.Component {
   handleSignInSignedIn = value => {
     if(value !== null) {
       this.props.onChangeUser(value);
-      this.setState({activeCategory: null});
+      this.props.onChangeActiveCategory(null);
     }
     this.setState({ userToLogin: null, openSignInDialog: false, openLoginDialog: false });
   };
@@ -209,8 +208,8 @@ class Dashboard extends React.Component {
         //delete elem
         this.props.currentUser.categories.splice(i, 1);
 
-        if(this.state.activeCategory === categoryToDelete)
-          this.setState({ activeCategory: null });
+        if(this.props.activeCategory === categoryToDelete)
+          this.props.onChangeActiveCategory(null);
         
         return true;
       }
@@ -228,7 +227,7 @@ class Dashboard extends React.Component {
     const { classes } = this.props;
     const tooltipText = this.props.currentUser !== null ? this.props.currentUser.email : '';
 
-    let dashboardText = this.state.activeCategory !== null ? this.state.activeCategory.name : "Dashboard";
+    let dashboardText = this.props.activeCategory !== null ? this.props.activeCategory.name : "Dashboard";
 
     return (
       <div className={classes.root}>
@@ -290,7 +289,7 @@ class Dashboard extends React.Component {
             <MenuItems
               handleClickCategory = {this.handleClickCategory}
               categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
-              activeCategory = {this.state.activeCategory}/>
+              activeCategory = {this.props.activeCategory}/>
           </List>
           {this.props.currentUser !== null && 
           this.props.currentUser.categories !== null && 
@@ -350,7 +349,7 @@ class Dashboard extends React.Component {
           <div className={classes.appBarSpacer} />
           <MyTable 
             classes={this.classes}
-            activeCategory = {this.state.activeCategory}/>
+            activeCategory = {this.props.activeCategory}/>
         </main>
       </div>
     );
@@ -361,10 +360,12 @@ Dashboard.propTypes = {
   classes: PropTypes.object.isRequired,
   emails: PropTypes.array.isRequired,
   currentUser: PropTypes.object,
+  activeCategory: PropTypes.object,
   handleCreateUser: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,
   onChangeUser: PropTypes.func.isRequired,
+  onChangeActiveCategory: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(Dashboard);
