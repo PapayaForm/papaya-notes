@@ -32,8 +32,10 @@ class App extends Component {
   }
 
   handleChangeUser = value => {
-    if(value !== null)
+    if(value !== null && value !== this.state.currentUser) {
       this.setState({currentUser: value});
+      this.setState({activeCategory: null});
+    }
   }
 
   handleChangeActiveCategory = value => {
