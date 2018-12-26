@@ -10,8 +10,6 @@ class DashboardData extends Data {
         super(name, CategoriesEnum.eDashboard)
 
         this.desc = desc;
-        this.cols = Math.random() * 10 < 5 ? 1 : 2;
-        if(this.cols === 2) this.desc = 'takie długie dłuższe słowo nma mmm';
     }
 }
 

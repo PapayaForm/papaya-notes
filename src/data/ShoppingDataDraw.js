@@ -26,7 +26,7 @@ const styles = () => ({
     tableContainer: {
         height: 320,
     },
-    fabAdd:{}, fabStore:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
+    fabAdd:{}, fabMenu:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
   });
 
 const SortableTableRow = SortableElement(({idx, row, removeItem, classes}) => {

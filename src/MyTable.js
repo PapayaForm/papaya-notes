@@ -4,8 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CategoryDraw from "./data/CategoryDraw";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import Storage from '@material-ui/icons/Storage';
-import Store from '@material-ui/icons/Store';
+import MenuIcon from '@material-ui/icons/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
@@ -23,7 +22,7 @@ const styles = theme => ({
     //bottom: theme.spacing.unit * 2,
     //right: theme.spacing.unit * 2,
   },
-  fabStore: {
+  fabMenu: {
     margin: 0,
     top: 'auto',
     right: 80,
@@ -45,9 +44,9 @@ class MyTable extends React.Component {
     this.setState({refresh: !this.state.refresh});
   }
 
-  handleAddItem = () => {
+  handleMenu = () => {
     if(this.props.activeCategory !== null) {
-      this.props.activeCategory.AddData('ala' + this.props.activeCategory.dataItems.length, 'makota makota');
+      // TODO
       this.forceTableRefresh();
     }
   }
@@ -66,7 +65,7 @@ class MyTable extends React.Component {
     else {
       const isNotEmptyList = this.props.activeCategory.dataItems.length > 0;
       const tooltipAddText = 'Add new item to the shopping list';
-      const tooltipStorageText = isNotEmptyList ? 'Save shopping list as template' : 'Fill from template';
+      const tooltipStorageText = isNotEmptyList ? 'Items menu' : 'Items menu';
       return (
         <div>
           <CategoryDraw 
@@ -78,17 +77,17 @@ class MyTable extends React.Component {
           <Tooltip title={tooltipAddText}>
             <Fab
               className={classes.fabAdd}
-              onClick={this.handleAddItem}
+              onClick={this.props.handleAddNewCategoryItemClick}
               color='primary'>
               <AddIcon />
             </Fab>
           </Tooltip>
           <Tooltip title={tooltipStorageText}>
             <Fab
-              className={classes.fabStore}
-              onClick={this.handleAddItem}
+              className={classes.fabMenu}
+              onClick={this.handleMenu}
               color='primary'>
-              {isNotEmptyList ? ( <Store />) : (<Storage />)}
+              {isNotEmptyList ? ( <MenuIcon />) : (<MenuIcon />)}
             </Fab>
           </Tooltip>
         </div>
@@ -100,6 +99,7 @@ class MyTable extends React.Component {
 MyTable.propTypes = {
   classes: PropTypes.object.isRequired,
   activeCategory: PropTypes.object,
+  handleAddNewCategoryItemClick: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(MyTable);

@@ -30,6 +30,9 @@ import AddCategoryDialog from './AddCategoryDialog';
 import DeleteCategoryDialog from './DeleteCategoryDialog';
 import ShortInfoMessage from './ShortInfoMessage';
 import CreateUserDialog from './CreateUserDialog';
+import CategoryDataNewForm from './data/CategoryDataNewForm';
+
+
 
 const drawerWidth = 240;
 
@@ -109,6 +112,7 @@ class Dashboard extends React.Component {
     openLoginDialog: true,
     openSignInDialog: false,
     openAddCategoryDialog: false,
+    openAddCategoryItemDialog: false,
     openCreateUserDialog: false,
     openDeleteCategoryDialog: false,
     openShortInfoMessage: false,
@@ -181,6 +185,10 @@ class Dashboard extends React.Component {
     this.setState({ openAddCategoryDialog: true });
   };
 
+  handleClickAddCategoryItem = () => {
+    this.setState({ openAddCategoryItemDialog: true });
+  };
+
   handleAddCategoryDialogAddCategory = (name, type) => {
     if(name !== '' && ValidateCategory(type) && this.props.currentUser !== null)
     {
@@ -190,8 +198,18 @@ class Dashboard extends React.Component {
     return false;
   };
 
+  handleAddCategoryItem = (name, desc) => {
+    if(this.props.activeCategory !== null && name !== '') {
+      this.props.activeCategory.AddData(name, desc);
+    }
+  };
+
   handleAddCategoryDialogClose = () => {
     this.setState({ openAddCategoryDialog: false, });
+  };
+
+  handleAddCategoryItemDialogClose = () => {
+    this.setState({ openAddCategoryItemDialog: false, });
   };
 
   handleClickDeleteCategory = () => {
@@ -337,6 +355,13 @@ class Dashboard extends React.Component {
           handleDeleteCategory={this.handleDeleteCategory}
           categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
         />
+        <CategoryDataNewForm
+          classes={this.classes}
+          open={this.state.openAddCategoryItemDialog}
+          onClose={this.handleAddCategoryItemDialogClose}
+          handleAddItem={this.handleAddCategoryItem}
+          type = {this.props.activeCategory !== null ? this.props.activeCategory.type : null}
+        />
 
         <ShortInfoMessage
           classes={this.classes}
@@ -348,8 +373,9 @@ class Dashboard extends React.Component {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <MyTable 
-            classes={this.classes}
-            activeCategory = {this.props.activeCategory}/>
+            classes = {this.classes}
+            activeCategory = {this.props.activeCategory}
+            handleAddNewCategoryItemClick = {this.handleClickAddCategoryItem}/>
         </main>
       </div>
     );

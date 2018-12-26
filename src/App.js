@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Dashboard from './Dashboard';
 import User from './data/User';
+// eslint-disable-next-line
 import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-storage";
 
 
@@ -39,7 +40,7 @@ class App extends Component {
   }
 
   handleChangeActiveCategory = value => {
-    if(value !== null)
+    if(value !== null && value !== this.state.activeCategory)
       this.setState({activeCategory: value});
   }
 
