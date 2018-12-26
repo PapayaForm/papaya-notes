@@ -4,6 +4,7 @@ import Dashboard from './Dashboard';
 import User from './data/User';
 // eslint-disable-next-line
 import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-storage";
+import Category from './data/Category';
 
 
 class App extends Component {
@@ -66,6 +67,7 @@ class App extends Component {
   handleParentStateHydrated = () => {
     let emails = [];
     let currentUser = null
+    let activeCategory = null;
 
     if(this.state.emails && this.state.emails.length > 0) {
       for(let i = 0; i < this.state.emails.length; i++) {
@@ -73,8 +75,9 @@ class App extends Component {
       }
     }
     currentUser = User.SerializeFromStorage(this.state.currentUser);
+    activeCategory = Category.SerializeFromStorage(this.state.activeCategory);
 
-    this.setState({ emails: emails, currentUser: currentUser });
+    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory });
   }
 
   render() {
