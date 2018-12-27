@@ -24,6 +24,7 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import Category from './data/Category';
 import {ValidateCategory} from './data/CategoriesEnum';
 //Dialogs:
+import SettingsDialog from './SettingsDialog';
 import LoginDialog from './LoginDialog';
 import SignIn from './SignIn';
 import AddCategoryDialog from './AddCategoryDialog';
@@ -109,6 +110,7 @@ class Dashboard extends React.Component {
   state = {
     userToLogin: null,
     open: false,
+    openSettingsDialog: false,
     openLoginDialog: true,
     openSignInDialog: false,
     openAddCategoryDialog: false,
@@ -144,7 +146,11 @@ class Dashboard extends React.Component {
   };
 
   handleClickSettings = () => {
-    this.props.onChangeTheme();
+    this.setState({ openSettingsDialog: true, });
+  };
+
+  handleSettingsClose = () => {
+    this.setState({ openSettingsDialog: false, });
   };
 
   handleClickPerson = () => {
@@ -324,6 +330,13 @@ class Dashboard extends React.Component {
           </List>
         </Drawer>
 
+        <SettingsDialog
+          classes={this.classes}
+          open={this.state.openSettingsDialog}
+          onClose={this.handleSettingsClose}
+          lightTheme={this.props.lightTheme}
+          handleChangeSettings={this.props.onChangeTheme}
+        />
         <LoginDialog
           currentUser={this.props.currentUser}
           open={this.state.openLoginDialog}
@@ -387,6 +400,7 @@ Dashboard.propTypes = {
   emails: PropTypes.array.isRequired,
   currentUser: PropTypes.object,
   activeCategory: PropTypes.object,
+  lightTheme: PropTypes.bool.isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,

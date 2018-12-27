@@ -24,8 +24,7 @@ class App extends Component {
     this.setState({refresh: !this.state.refresh});
   }
 
-  handleChangeTheme = () => {
-    const { lightTheme } = this.state;
+  handleChangeTheme = lightTheme => {
     if(lightTheme === true)
       this.setState({lightTheme: false});
     else
@@ -112,6 +111,7 @@ class App extends Component {
               emails = { emails }
               currentUser = { currentUser }
               activeCategory = { activeCategory }
+              lightTheme = { lightTheme }
             />
       </div>
       </MuiThemeProvider>
