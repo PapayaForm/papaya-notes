@@ -112,6 +112,7 @@ class Dashboard extends React.Component {
     open: false,
     openSettingsDialog: false,
     openLoginDialog: true,
+    openLoginDialog: this.props.currentUser !== null ? false : true,
     openSignInDialog: false,
     openAddCategoryDialog: false,
     openAddCategoryItemDialog: false,
