@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Dashboard from './Dashboard';
 import User from './data/User';
 // eslint-disable-next-line
@@ -103,7 +104,8 @@ class App extends Component {
 
     return (
       <MuiThemeProvider theme={theme}>
-      <div className="container">
+        <CssBaseline />
+        <div className="container">
           <SimpleStorage parent={this} onParentStateHydrated={this.handleParentStateHydrated}/>
           <Dashboard 
               onChangeTheme = { this.handleChangeTheme }
@@ -116,7 +118,7 @@ class App extends Component {
               activeCategory = { activeCategory }
               lightTheme = { lightTheme }
             />
-      </div>
+        </div>
       </MuiThemeProvider>
     );
   }

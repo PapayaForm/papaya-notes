@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -111,7 +110,6 @@ class Dashboard extends React.Component {
     userToLogin: null,
     open: false,
     openSettingsDialog: false,
-    openLoginDialog: true,
     openLoginDialog: this.props.currentUser !== null ? false : true,
     openSignInDialog: false,
     openAddCategoryDialog: false,
@@ -227,6 +225,9 @@ class Dashboard extends React.Component {
     this.setState({ openDeleteCategoryDialog: false, });
   };
 
+  handleClickManageCategory = () => {
+  };
+
   handleDeleteCategory = categoryToDelete => {
     for (var i = 0; i < this.props.currentUser.categories.length; i++) {
       if (this.props.currentUser.categories[i] === categoryToDelete) {
@@ -256,7 +257,6 @@ class Dashboard extends React.Component {
 
     return (
       <div className={classes.root}>
-        <CssBaseline />
         <AppBar
           position="absolute"
           className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
@@ -282,7 +282,7 @@ class Dashboard extends React.Component {
             >
             {dashboardText}
             </Typography>
-            <IconButton color="inherit" onClick={() => this.props.handleClearStorage()}>
+            <IconButton color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>
@@ -325,7 +325,7 @@ class Dashboard extends React.Component {
             <ManageMenu 
               disabled={this.props.currentUser === null}
               disabledDelete={this.props.currentUser === null || this.props.currentUser.categories.length === 0}
-              handleClickSettings = {this.handleClickSettings} 
+              handleClickManageCategory = {this.handleClickManageCategory} 
               handleClickAddCategory = {this.handleClickAddCategory}
               handleClickDeleteCategory = {this.handleClickDeleteCategory}/>
           </List>
@@ -337,6 +337,7 @@ class Dashboard extends React.Component {
           onClose={this.handleSettingsClose}
           lightTheme={this.props.lightTheme}
           handleChangeSettings={this.props.onChangeTheme}
+          handleClearStorage={this.props.handleClearStorage}
         />
         <LoginDialog
           currentUser={this.props.currentUser}

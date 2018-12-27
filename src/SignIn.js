@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -74,7 +73,6 @@ class SignIn extends React.Component {
     return (
       <Dialog onClose={this.handleClose} onExit={this.handleExit} onBackdropClick={this.handleBackdropClick} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
-          <CssBaseline />
           <Avatar className={classes.avatar}>
             <LockIcon />
           </Avatar>
