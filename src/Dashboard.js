@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
   
   state = {
     userToLogin: null,
-    open: false,
+    openDrawer: false,
     openSettingsDialog: false,
     openLoginDialog: this.props.currentUser !== null ? false : true,
     openSignInDialog: false,
@@ -123,11 +123,11 @@ class Dashboard extends React.Component {
   
 
   handleDrawerOpen = () => {
-    this.setState({ open: true });
+    this.setState({ openDrawer: true });
   };
 
   handleDrawerClose = () => {
-    this.setState({ open: false });
+    this.setState({ openDrawer: false });
   };
 
 
@@ -259,16 +259,16 @@ class Dashboard extends React.Component {
       <div className={classes.root}>
         <AppBar
           position="absolute"
-          className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
+          className={classNames(classes.appBar, this.state.openDrawer && classes.appBarShift)}
         >
-          <Toolbar disableGutters={!this.state.open} className={classes.toolbar}>
+          <Toolbar disableGutters={!this.state.openDrawer} className={classes.toolbar}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
               onClick={this.handleDrawerOpen}
               className={classNames(
                 classes.menuButton,
-                this.state.open && classes.menuButtonHidden,
+                this.state.openDrawer && classes.menuButtonHidden,
               )}
             >
               <MenuIcon />
@@ -300,9 +300,9 @@ class Dashboard extends React.Component {
         <Drawer
           variant="permanent"
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+            paper: classNames(classes.drawerPaper, !this.state.openDrawer && classes.drawerPaperClose),
           }}
-          open={this.state.open}
+          open={this.state.openDrawer}
         >
           <div className={classes.toolbarIcon}>
             <IconButton onClick={this.handleDrawerClose}>

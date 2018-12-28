@@ -118,15 +118,15 @@ class AddCategoryDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button 
-              onClick={this.handleClose}
-              color="primary" >
-              Cancel
-            </Button>
-            <Button 
               onClick={this.handleAdd}
               disabled={this.state.categoryName === '' || this.state.categoryType === ''}
               color="primary" >
               Add Category
+            </Button>
+            <Button 
+              onClick={this.handleClose}
+              color="primary" >
+              Cancel
             </Button>
           </DialogActions>
         </Dialog>

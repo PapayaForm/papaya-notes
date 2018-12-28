@@ -35,7 +35,6 @@ const styles = theme => ({
 class SettigsDialog extends React.Component {
 
   state = {
-    darkTheme: !this.props.lightTheme,
     localStorage: 'storageLocal',
     accountName: '',
     accountPass: '',
@@ -63,12 +62,6 @@ class SettigsDialog extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleChangeChecked = event => {
-    this.setState({ [event.target.name]: event.target.checked });
-
-    if (event.target.name === 'darkTheme')
-      this.props.handleChangeSettings(!this.state.darkTheme)
-  };
 
   render() {
     const { classes, handleChangeSettings, handleClearStorage, lightTheme, ...other } = this.props;
@@ -87,8 +80,8 @@ class SettigsDialog extends React.Component {
                 control={
                   <Switch
                     name="darkTheme"
-                    checked={this.state.darkTheme}
-                    onChange={this.handleChangeChecked}
+                    checked={!this.props.lightTheme}
+                    onChange={() => {this.props.handleChangeSettings(!this.props.lightTheme)}}
                     value="darkTheme"
                   />
                 }

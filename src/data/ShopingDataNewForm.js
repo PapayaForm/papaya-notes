@@ -4,30 +4,15 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import Paper from '@material-ui/core/Paper';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 8,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-  },
   formdialog: {
     fullWidth: true,
-    maxWidth: 'md',
-  },
-  avatar: {
-    margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    marginTop: theme.spacing.unit,
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3,
+    maxWidth: 'sm',
+    scroll: 'paper',
   },
 });
 
@@ -57,12 +42,11 @@ class ShopingDataNewForm extends React.Component {
     const { classes, handleAddItem, ...other } = this.props;
 
     return (
-      <Dialog fullWidth={true} maxWidth='sm' onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog className={classes.formdialog} fullWidth={true} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
           New data
         </DialogTitle>
-        <Paper className={classes.paper}>
-          
+        <DialogContent>
           <TextField
             required
             id="standard-required"
@@ -84,15 +68,22 @@ class ShopingDataNewForm extends React.Component {
             margin="normal"
             fullWidth
           />
+        </DialogContent>
+        <DialogActions>
           <Button
-            variant="contained"
             color="primary"
-            className={classes.submit}
             onClick={this.handleAddItem}
+            disabled={this.state.name === ''}
           >
             Add item
           </Button>
-        </Paper>
+          <Button
+            color="primary"
+            onClick={() => {this.handleClose(); this.props.onClose();}}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   }

@@ -27,10 +27,7 @@ class App extends Component {
   }
 
   handleChangeTheme = lightTheme => {
-    if(lightTheme === true)
-      this.setState({lightTheme: false});
-    else
-      this.setState({lightTheme: true});
+    this.setState({lightTheme: lightTheme});
   }
 
   handleChangeUser = value => {
@@ -77,14 +74,12 @@ class App extends Component {
     currentUser = User.SerializeFromStorage(this.state.currentUser);
     activeCategory = Category.SerializeFromStorage(this.state.activeCategory);
 
-    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory });
+    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, });
   }
 
   render() {
 
-    const { emails, currentUser, activeCategory, lightTheme } = this.state;
-
-    const theme = lightTheme === true ? createMuiTheme({
+    const theme = this.state.lightTheme === true ? createMuiTheme({
         palette: {
           type: 'light',
         },
@@ -94,6 +89,11 @@ class App extends Component {
       }) : createMuiTheme({
         palette: {
           type: 'dark',
+          primary: {
+            light: 'rgb(113, 205, 250)',
+            main: 'rgb(63, 155, 200)',
+            dark: 'rgb(23, 105, 150)'
+          },
         },
         typography: {
           useNextVariants: true,
@@ -113,10 +113,10 @@ class App extends Component {
               onChangeActiveCategory = { this.handleChangeActiveCategory }
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
-              emails = { emails }
-              currentUser = { currentUser }
-              activeCategory = { activeCategory }
-              lightTheme = { lightTheme }
+              emails = { this.state.emails }
+              currentUser = { this.state.currentUser }
+              activeCategory = { this.state.activeCategory }
+              lightTheme = { this.state.lightTheme }
             />
         </div>
       </MuiThemeProvider>

@@ -4,26 +4,22 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import Paper from '@material-ui/core/Paper';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormGroup from '@material-ui/core/FormGroup';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = theme => ({
-  paper: {
-    marginTop: theme.spacing.unit * 8,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-  },
   avatar: {
     margin: theme.spacing.unit,
     backgroundColor: theme.palette.secondary.main,
   },
-  form: {
-    marginTop: theme.spacing.unit,
-  },
-  submit: {
-    marginTop: theme.spacing.unit * 3,
+  formdialog: {
+    fullWidth: true,
+    maxWidth: 'sm',
+    scroll: 'paper',
   },
 });
 
@@ -32,25 +28,20 @@ class CreateUserDialog extends React.Component {
   state = {
     user: '',
     password: '',
+    passwordConfirm: '',
   };
 
   handleClose = () => {
-    this.setState({ user: '', password: ''});
+    this.setState({ user: '', password: '', passwordConfirm: ''});
   };
-
-  handleExit = () => {
-    this.setState({ user: '', password: ''});
-  };
-
-  handleBackdropClick = () => {
-    this.setState({ user: '', password: ''});
-  }
 
   handleClickCreateUser = () => {
-    if(this.props.handleCreateUser(this.state.user, this.state.password) === true) {
+    if(this.state.password === '' || this.state.password === this.state.passwordConfirm) {
+      if(this.props.handleCreateUser(this.state.user, this.state.password) === true) {
+      }
+      this.setState({ user: '', password: ''});
+      this.props.onClose();
     }
-    this.setState({ user: '', password: ''});
-    this.props.onClose();
   };
 
   handleChange = event => {
@@ -61,43 +52,72 @@ class CreateUserDialog extends React.Component {
     const { classes,  handleCreateUser, ...other } = this.props;
 
     return (
-      <Dialog onClose={this.handleClose} onExit={this.handleExit} onBackdropClick={this.handleBackdropClick} aria-labelledby="simple-dialog-title" {...other}>
+      <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
-          Create user
+          Create profile
         </DialogTitle>
-        <Paper className={classes.paper}>
-          
-          <TextField
-            required
-            id="standard-required"
-            label="User name"
-            name="user"
-            value={this.state.user}
-            onChange={this.handleChange} 
-            className={classes.textField}
-            margin="normal"
-          />
-          <TextField
-            id="standard-password-input"
-            label="Password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleChange} 
-            className={classes.textField}
-            type="password"
-            autoComplete="current-password"
-            margin="normal"
-          />
+        <DialogContent>
+          <FormControl component="fieldset" className={classes.formControl}>
+            <FormGroup>
+              <TextField
+                required
+                id="standard-required"
+                label="User name"
+                name="user"
+                value={this.state.user}
+                onChange={this.handleChange} 
+                className={classes.textField}
+                margin="normal"
+              />
+
+              <TextField
+                id="standard-password-input"
+                label="Password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleChange} 
+                className={classes.textField}
+                type="password"
+                autoComplete="current-password"
+                margin="normal"
+              />
+
+              <TextField
+                id="standard-password-input"
+                label="Confirm Password"
+                name="passwordConfirm"
+                value={this.state.passwordConfirm}
+                onChange={this.handleChange} 
+                className={classes.textField}
+                type="password"
+                autoComplete="current-password"
+                margin="normal"
+                disabled={this.state.password === ''}
+                error={this.state.password !== '' && this.state.password !== this.state.passwordConfirm}
+              />
+
+              <FormHelperText>
+                Be careful:<br/>
+                Password is optional. You may protect your profile with password, but if you forgot it - it is not possible to restore it.
+              </FormHelperText>
+            </FormGroup>
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
           <Button
-            fullWidth
-            variant="contained"
             color="primary"
-            className={classes.submit}
             onClick={this.handleClickCreateUser}
+            disabled={this.state.user === '' || (this.state.password !== '' && this.state.password !== this.state.passwordConfirm)}
           >
-            Create User
+            Create Profile
           </Button>
-        </Paper>
+          <Button
+            color="primary"
+            onClick={() => {this.handleClose(); this.props.onClose();}}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
       </Dialog>
     );
   }

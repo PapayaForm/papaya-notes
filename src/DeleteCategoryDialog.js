@@ -93,12 +93,12 @@ class DeleteCategoryDialog extends React.Component {
           </DialogContent>
           <div className={classes.topmargin}>
             <DialogActions>
-              <Button onClick={this.handleClose} color="primary">
-                Cancel
-            </Button>
               <Button onClick={this.handleDelete} disabled={this.state.activeDlgCategory === null} color="primary">
                 Delete
-            </Button>
+              </Button>
+              <Button onClick={this.handleClose} color="primary">
+                Cancel
+              </Button>
             </DialogActions>
           </div>
           <MessageBoxDialog
