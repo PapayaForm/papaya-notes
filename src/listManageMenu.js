@@ -34,7 +34,7 @@ const ManageMenu = props => {
                 </ListItemIcon>
                 <ListItemText primary="Delete category" />
             </ListItem>
-            <ListItem disabled={props.disabled} button onClick={() => props.handleClickManageCategory()}>
+            <ListItem disabled={true} button onClick={() => props.handleClickManageCategory()}>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>

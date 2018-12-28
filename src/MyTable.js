@@ -86,7 +86,8 @@ class MyTable extends React.Component {
             <Fab
               className={classes.fabMenu}
               onClick={this.handleMenu}
-              color='primary'>
+              color='primary'
+              disabled>
               {isNotEmptyList ? ( <MenuIcon />) : (<MenuIcon />)}
             </Fab>
           </Tooltip>
