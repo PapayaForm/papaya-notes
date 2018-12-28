@@ -8,7 +8,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import DoneIcon from '@material-ui/icons/Done';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import { Divider } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
@@ -39,9 +41,17 @@ const SortableTableRow = SortableElement(({idx, tile, removeItem, classes}) => {
                         {tile.desc}
                     </Typography>
                 </CardContent>
+                <Divider/>
                 <CardActions>
                     <Button
-                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={() => removeItem(idx)}>
+                        Done
+                        <DoneIcon className={classes.rightIcon} />
+                    </Button>
+                    <Button
+                        variant="outlined"
                         color="secondary"
                         className={classes.button}
                         onClick={() => removeItem(idx)}>
