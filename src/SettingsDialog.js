@@ -32,6 +32,13 @@ const styles = theme => ({
 });
 
 
+const MessageBoxActionsEnum = Object.freeze({
+  "eNone": 0,
+  "eDeleteAllData": 1,
+  "eImport": 2,
+});
+
+
 class SettigsDialog extends React.Component {
 
   state = {
@@ -41,21 +48,44 @@ class SettigsDialog extends React.Component {
     openMessageBox: false,
     MessageBoxTitle: '',
     MessageBoxText: '',
+    MessageBoxAction: MessageBoxActionsEnum.eNone,
   };
 
   handleClose = () => {
   };
 
+  handleImport = () => {
+    let action = MessageBoxActionsEnum.eImport;
+    let message = 'This operation will overwrite (delete) all existing data. Do you really want to import data from file?';
+    this.setState({ MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+  };
+
+  handleExport = () => {
+    this.props.handleExportStorage();
+  };
+  
   handleClearAll = () => {
+    let action = MessageBoxActionsEnum.eDeleteAllData;
     let message = 'Do you really want to delete all the data?';
-    this.setState({ MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, openMessageBox: true });
+    this.setState({ MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
   };
 
   handleMessageBoxClose = value => {
-    if (value === true)
-      this.props.handleClearStorage();
+    if (value === true) {
+      
+      switch(this.state.MessageBoxAction) {
+        case MessageBoxActionsEnum.eDeleteAllData:
+          this.props.handleClearStorage();
+          break;
+        case MessageBoxActionsEnum.eImport:
+          this.props.handleImportStorage();
+          break;
+        default:
+           break;
+        }
+    }
 
-    this.setState({ openMessageBox: false });
+    this.setState({ MessageBoxAction: MessageBoxActionsEnum.eNone,  openMessageBox: false });
   };
 
   handleChange = event => {
@@ -64,7 +94,8 @@ class SettigsDialog extends React.Component {
 
 
   render() {
-    const { classes, handleChangeSettings, handleClearStorage, lightTheme, ...other } = this.props;
+    const { classes, handleChangeSettings, handleClearStorage, 
+            handleImportStorage, handleExportStorage, lightTheme, ...other } = this.props;
 
     return (
       <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
@@ -140,6 +171,13 @@ class SettigsDialog extends React.Component {
 
           <Divider className={classes.dividerClass} />
 
+          
+          <Button color="primary" onClick={this.handleImport}>
+            Import
+          </Button>
+          <Button color="primary" onClick={this.handleExport}>
+            Export
+          </Button>
           <Button color="secondary" onClick={this.handleClearAll}>
             Clear all saved data and users
           </Button>
@@ -181,6 +219,8 @@ SettigsDialog.propTypes = {
   onClose: PropTypes.func,
   handleChangeSettings: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
+  handleImportStorage: PropTypes.func.isRequired,
+  handleExportStorage: PropTypes.func.isRequired,
   lightTheme: PropTypes.bool.isRequired,
 };
 

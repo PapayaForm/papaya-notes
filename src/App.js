@@ -6,6 +6,7 @@ import User from './data/User';
 // eslint-disable-next-line
 import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-storage";
 import Category from './data/Category';
+import readLocalFiles from '@loopmode/read-local-files';
 
 
 class App extends Component {
@@ -61,20 +62,57 @@ class App extends Component {
     this.forceRefresh();
   }
 
-  handleParentStateHydrated = () => {
+  handleExportStorage = () => {
+    console.log('exportStorage Called.');
+    
+    var jsonData = JSON.stringify(this.state);
+    var fileDownload = require('js-file-download');
+    fileDownload(jsonData, 'PapayaNotesExportedData.json');
+
+    this.forceRefresh();
+  }
+
+  handleImportStorage = () => {
+    console.log('importStorage Called.');
+
+    readLocalFiles()
+      .then(fileInputs => {
+        let data = fileInputs.map(input => JSON.parse(input.result))
+        if(this.ValidateData(data[0]))
+          this.SetStateFromData(data[0]);
+      })
+      .catch(error => {
+        console.warn(error)
+      });
+
+    this.forceRefresh();
+  }
+
+  ValidateData = (data) => {
+    // TODO 
+    return true;
+  }
+
+  SetStateFromData = (data) => {
     let emails = [];
     let currentUser = null
     let activeCategory = null;
+    let lightTheme = true;
 
-    if(this.state.emails && this.state.emails.length > 0) {
-      for(let i = 0; i < this.state.emails.length; i++) {
-        emails.push(User.SerializeFromStorage(this.state.emails[i]));
+    if(data.emails && data.emails.length > 0) {
+      for(let i = 0; i < data.emails.length; i++) {
+        emails.push(User.SerializeFromStorage(data.emails[i]));
       }
     }
-    currentUser = User.SerializeFromStorage(this.state.currentUser);
-    activeCategory = Category.SerializeFromStorage(this.state.activeCategory);
+    currentUser = User.SerializeFromStorage(data.currentUser);
+    activeCategory = Category.SerializeFromStorage(data.activeCategory);
+    lightTheme = data.lightTheme;
 
-    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, });
+    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme});
+  }
+
+  handleParentStateHydrated = () => {
+    this.SetStateFromData(this.state);
   }
 
   render() {
@@ -113,6 +151,8 @@ class App extends Component {
               onChangeActiveCategory = { this.handleChangeActiveCategory }
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
+              handleImportStorage = { this.handleImportStorage }
+              handleExportStorage = { this.handleExportStorage }
               emails = { this.state.emails }
               currentUser = { this.state.currentUser }
               activeCategory = { this.state.activeCategory }

@@ -7,7 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
+//import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 
@@ -43,14 +43,13 @@ const SortableTableRow = SortableElement(({idx, row, removeItem, classes}) => {
                     Done
                     <DoneIcon className={classes.rightIcon} />
                 </Button>
-                <Button
-                    variant="outlined"
+                {/*<Button
                     color="secondary"
                     className={classes.button}
                     onClick={() => removeItem(idx)}>
                     Delete
                     <DeleteIcon className={classes.rightIcon} />
-                </Button>
+                </Button>*/}
             </TableCell>
         </TableRow>
       );

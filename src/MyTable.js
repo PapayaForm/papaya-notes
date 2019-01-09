@@ -65,7 +65,7 @@ class MyTable extends React.Component {
     else {
       const isNotEmptyList = this.props.activeCategory.dataItems.length > 0;
       const tooltipAddText = 'Add new item to the shopping list';
-      const tooltipStorageText = isNotEmptyList ? 'Items menu' : 'Items menu';
+      //const tooltipStorageText = isNotEmptyList ? 'Items menu' : 'Items menu';
       return (
         <div>
           <CategoryDraw 
@@ -82,7 +82,7 @@ class MyTable extends React.Component {
               <AddIcon />
             </Fab>
           </Tooltip>
-          <Tooltip title={tooltipStorageText}>
+          {/*<Tooltip title={tooltipStorageText}>*/}
             <Fab
               className={classes.fabMenu}
               onClick={this.handleMenu}
@@ -90,7 +90,7 @@ class MyTable extends React.Component {
               disabled>
               {isNotEmptyList ? ( <MenuIcon />) : (<MenuIcon />)}
             </Fab>
-          </Tooltip>
+          {/*</Tooltip>*/}
         </div>
       );
     }

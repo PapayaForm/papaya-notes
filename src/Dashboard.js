@@ -338,6 +338,8 @@ class Dashboard extends React.Component {
           lightTheme={this.props.lightTheme}
           handleChangeSettings={this.props.onChangeTheme}
           handleClearStorage={this.props.handleClearStorage}
+          handleImportStorage={this.props.handleImportStorage}
+          handleExportStorage={this.props.handleExportStorage}
         />
         <LoginDialog
           currentUser={this.props.currentUser}
@@ -405,6 +407,8 @@ Dashboard.propTypes = {
   lightTheme: PropTypes.bool.isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
+  handleImportStorage: PropTypes.func.isRequired,
+  handleExportStorage: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,
   onChangeUser: PropTypes.func.isRequired,
   onChangeActiveCategory: PropTypes.func.isRequired,
