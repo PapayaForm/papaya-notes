@@ -75,17 +75,20 @@ class App extends Component {
   handleImportStorage = () => {
     console.log('importStorage Called.');
 
-    readLocalFiles()
+    var returnValue = false;
+    readLocalFiles({rejectTimeout: 3000})
       .then(fileInputs => {
-        let data = fileInputs.map(input => JSON.parse(input.result))
-        if(this.ValidateData(data[0]))
-          this.SetStateFromData(data[0]);
+        let data = fileInputs.map(input => JSON.parse(input.result));
+        if(this.ValidateData(data[0]) && this.SetStateFromData(data[0]))
+          returnValue = true;
       })
       .catch(error => {
         console.warn(error)
       });
 
     this.forceRefresh();
+
+    return returnValue;
   }
 
   ValidateData = (data) => {
@@ -109,6 +112,8 @@ class App extends Component {
     lightTheme = data.lightTheme;
 
     this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme});
+
+    return true;
   }
 
   handleParentStateHydrated = () => {

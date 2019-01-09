@@ -57,7 +57,7 @@ class SettigsDialog extends React.Component {
   handleImport = () => {
     let action = MessageBoxActionsEnum.eImport;
     let message = 'This operation will overwrite (delete) all existing data. Do you really want to import data from file?';
-    this.setState({ MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+    this.setState({ MessageBoxTitle: 'Confirm Import', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
   };
 
   handleExport = () => {
@@ -78,8 +78,19 @@ class SettigsDialog extends React.Component {
           this.props.handleClearStorage();
           break;
         case MessageBoxActionsEnum.eImport:
-          this.props.handleImportStorage();
+        {
+          if (this.props.handleImportStorage()) {
+            let action = MessageBoxActionsEnum.eNone;
+            let message = 'Data import succeeded';
+            this.setState({ MessageBoxTitle: 'Info:', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+          }
+          else {
+            let action = MessageBoxActionsEnum.eNone;
+            let message = 'Data import failed';
+            this.setState({ MessageBoxTitle: 'Info:', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+          }
           break;
+        }
         default:
            break;
         }
