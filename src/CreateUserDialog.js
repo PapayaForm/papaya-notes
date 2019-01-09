@@ -83,7 +83,7 @@ class CreateUserDialog extends React.Component {
               />
 
               <TextField
-                id="standard-password-input"
+                id="standard-password-input-confirm"
                 label="Confirm Password"
                 name="passwordConfirm"
                 value={this.state.passwordConfirm}
