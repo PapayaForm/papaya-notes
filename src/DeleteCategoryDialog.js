@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import MenuItems from './listMenuItems';
+import MainMenuItems from './listMenuItems';
 import MessageBoxDialog from './MessageBoxDialog';
 
 
@@ -85,7 +85,7 @@ class DeleteCategoryDialog extends React.Component {
         >
           <DialogTitle id="scroll-dialog-title">Select category to detele</DialogTitle>
           <DialogContent>
-            <MenuItems
+            <MainMenuItems
             handleClickCategory = {this.handleClickCategory}
             categories = {this.props.categories}
             activeCategory = {this.state.activeDlgCategory}

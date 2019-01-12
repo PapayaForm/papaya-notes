@@ -108,7 +108,9 @@ class App extends Component {
       }
     }
     currentUser = User.SerializeFromStorage(data.currentUser);
-    activeCategory = Category.SerializeFromStorage(data.activeCategory);
+    if(currentUser)
+      activeCategory = Category.ReturnCategoryFromCollectionForGivenState(data.activeCategory, currentUser.categories)
+    //activeCategory = Category.SerializeFromStorage(data.activeCategory);
     lightTheme = data.lightTheme;
 
     this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme});

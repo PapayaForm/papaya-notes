@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MenuItems from './listMenuItems';
+import MainMenuItems from './listMenuItems';
 import MyTable from './MyTable';
 import ManageMenu from  './listManageMenu';
 import PersonIcon from '@material-ui/icons/Person';
@@ -311,7 +311,7 @@ class Dashboard extends React.Component {
           </div>
           <Divider />
           <List>
-            <MenuItems
+            <MainMenuItems
               handleClickCategory = {this.handleClickCategory}
               categories = {this.props.currentUser !== null ? this.props.currentUser.categories : null}
               activeCategory = {this.props.activeCategory}/>

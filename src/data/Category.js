@@ -58,6 +58,20 @@ class Category {
         }
         return objectToInstantiate;
     }
+
+    static ReturnCategoryFromCollectionForGivenState(objectState, arrCategories) {
+        if(objectState) {
+            for(let i = 0; i < arrCategories.length; i++) {
+                let category = arrCategories[i];
+                if(objectState.name === category.name && objectState.type === category.type) {
+                    if(JSON.stringify(category.dataItems) === JSON.stringify(objectState.dataItems)) {
+                        return category;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 }
 
 
