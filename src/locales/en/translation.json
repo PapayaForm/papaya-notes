@@ -1,0 +1,6 @@
+{
+    "Notes management": "Notes management",
+    "Add new category": "Add new category",
+    "Do you really want to delete category _parameter?":  "Do you really want to delete category: \"{{parameter}}\"?",
+    "Category _parameter deleted": "Category: \"{{parameter}}\" deleted"
+}

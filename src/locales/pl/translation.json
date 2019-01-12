@@ -1,0 +1,8 @@
+{
+    "Notes management": "Zarządzaj notatkami",
+    "Add new category": "Dodaj nową kategorię",
+    "Add new item to the shopping list": "Dodaj nowy element do listy zakupów",
+    "Do you really want to delete all the data?": "Czy naprawdę chcesz usunąć wszytskie dane?",
+    "Do you really want to delete category _parameter?":  "Czy na pewno chcesz usunąć kategorię: \"{{parameter}}\"?",
+    "Category _parameter deleted": "Kategoria: \"{{parameter}}\" została usunięta"
+}

@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import i18n from './i18n';
 
 const styles = theme => ({
   });
@@ -49,10 +50,10 @@ class MessageBoxDialog extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              {i18n.t('Cancel')}
             </Button>
             <Button onClick={this.handleOKClose} color="primary">
-              OK
+              {i18n.t('OK')}
             </Button>
           </DialogActions>
         </Dialog>

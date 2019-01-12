@@ -11,6 +11,7 @@ import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
 import green from '@material-ui/core/colors/green';
+import i18n from './i18n';
 
 
 const styles = {
@@ -36,7 +37,7 @@ class LoginDialog extends React.Component {
 
     return (
       <Dialog onClose={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
-        <DialogTitle id="simple-dialog-title">Select user</DialogTitle>
+        <DialogTitle id="simple-dialog-title">{i18n.t('Select profile')}</DialogTitle>
         <div>
           <List>
             {this.props.emails.map(n => (
@@ -55,13 +56,13 @@ class LoginDialog extends React.Component {
                 <ListItemText primary={n.email} />
               </ListItem>
             ))}
-            <ListItem button onClick={() => this.handleListItemClick('addAccount')}>
+            <ListItem button onClick={() => this.handleListItemClick('@addProfile@')}>
               <ListItemAvatar>
                 <Avatar>
                   <AddIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText primary="add account" />
+              <ListItemText primary={i18n.t('add profile')} />
             </ListItem>
           </List>
         </div>

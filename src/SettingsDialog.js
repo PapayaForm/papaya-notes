@@ -6,6 +6,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Switch from '@material-ui/core/Switch';
@@ -17,6 +20,7 @@ import TextField from '@material-ui/core/TextField';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Divider from '@material-ui/core/Divider';
 import MessageBoxDialog from './MessageBoxDialog';
+import i18n from './i18n';
 
 
 const styles = theme => ({
@@ -56,57 +60,61 @@ class SettigsDialog extends React.Component {
 
   handleImport = () => {
     let action = MessageBoxActionsEnum.eImport;
-    let message = 'This operation will overwrite (delete) all existing data. Do you really want to import data from file?';
-    this.setState({ MessageBoxTitle: 'Confirm Import', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+    let message = i18n.t('This operation will overwrite (delete) all existing data. Do you really want to import data from file?');
+    this.setState({ MessageBoxTitle: i18n.t('Confirm Import'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
   };
 
   handleExport = () => {
     this.props.handleExportStorage();
   };
-  
+
   handleClearAll = () => {
     let action = MessageBoxActionsEnum.eDeleteAllData;
-    let message = 'Do you really want to delete all the data?';
-    this.setState({ MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+    let message = i18n.t('Do you really want to delete all the data?');
+    this.setState({ MessageBoxTitle: i18n.t('Confirm Delete'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
   };
 
   handleMessageBoxClose = value => {
     if (value === true) {
-      
-      switch(this.state.MessageBoxAction) {
+
+      switch (this.state.MessageBoxAction) {
         case MessageBoxActionsEnum.eDeleteAllData:
           this.props.handleClearStorage();
           break;
         case MessageBoxActionsEnum.eImport:
-        {
-          if (this.props.handleImportStorage()) {
-            let action = MessageBoxActionsEnum.eNone;
-            let message = 'Data import succeeded';
-            this.setState({ MessageBoxTitle: 'Info:', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+          {
+            if (this.props.handleImportStorage()) {
+              let action = MessageBoxActionsEnum.eNone;
+              let message = i18n.t('Data import succeeded');
+              this.setState({ MessageBoxTitle: i18n.t('Info:'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+            }
+            else {
+              let action = MessageBoxActionsEnum.eNone;
+              let message = i18n.t('Data import failed');
+              this.setState({ MessageBoxTitle: i18n.t('Info:'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+            }
+            break;
           }
-          else {
-            let action = MessageBoxActionsEnum.eNone;
-            let message = 'Data import failed';
-            this.setState({ MessageBoxTitle: 'Info:', MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
-          }
-          break;
-        }
         default:
-           break;
-        }
+          break;
+      }
     }
 
-    this.setState({ MessageBoxAction: MessageBoxActionsEnum.eNone,  openMessageBox: false });
+    this.setState({ MessageBoxAction: MessageBoxActionsEnum.eNone, openMessageBox: false });
   };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleChangeLanguage = event => {
+    this.props.handleChangeLanguage(event.target.value);
+  };
+
 
   render() {
-    const { classes, handleChangeSettings, handleClearStorage, 
-            handleImportStorage, handleExportStorage, lightTheme, ...other } = this.props;
+    const { classes, handleChangeSettings, handleClearStorage, handleChangeLanguage,
+      handleImportStorage, handleExportStorage, lightTheme, lang, ...other } = this.props;
 
     return (
       <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
@@ -116,27 +124,49 @@ class SettigsDialog extends React.Component {
         <DialogContent>
 
           <FormControl component="fieldset">
-            <FormLabel component="legend">User Interface</FormLabel>
+            <FormLabel component="legend">{i18n.t('User Interface')}</FormLabel>
             <FormGroup>
               <FormControlLabel
                 control={
                   <Switch
                     name="darkTheme"
                     checked={!this.props.lightTheme}
-                    onChange={() => {this.props.handleChangeSettings(!this.props.lightTheme)}}
+                    onChange={() => { this.props.handleChangeSettings(!this.props.lightTheme) }}
                     value="darkTheme"
                   />
                 }
-                label="Dark Theme"
+                label={i18n.t('Dark Theme')}
               />
             </FormGroup>
+          </FormControl>
+
+          <br/>
+
+          <FormControl fullWidth={true} component="fieldset" className={classes.formControl}>
+            <InputLabel htmlFor="lang-simple">{i18n.t('User Interface Language')}</InputLabel>
+            <Select
+              fullWidth={true}
+              value={this.props.lang}
+              onChange={this.handleChangeLanguage}
+              inputProps={{
+                name: 'lang',
+                id: 'lang-simple',
+              }}
+            >
+              <MenuItem value="en">
+                {i18n.t('English')}
+              </MenuItem>
+              <MenuItem value="pl">
+                {i18n.t('Polish')}
+              </MenuItem>
+            </Select>
           </FormControl>
 
           <Divider className={classes.dividerClass} />
 
 
           <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">Saved data</FormLabel>
+            <FormLabel component="legend">{i18n.t('Saved data')}</FormLabel>
             <FormHelperText>Be careful:<br />
               with local storage it is not possible to share notes and shopping lists between devices.<br />
               It is possible only with Google Account or Custom Account. But it requires internet connection.
@@ -148,9 +178,9 @@ class SettigsDialog extends React.Component {
               value={this.state.localStorage}
               onChange={this.handleChange}
             >
-              <FormControlLabel value="storageLocal" control={<Radio />} label="Local storage" />
-              <FormControlLabel value="storageGoogle" control={<Radio />} label="Use Google Account" disabled />
-              <FormControlLabel value="storageCustom" control={<Radio />} label="Custom Account" />
+              <FormControlLabel value="storageLocal" control={<Radio />} label={i18n.t('Local storage')} />
+              <FormControlLabel value="storageGoogle" control={<Radio />} label={i18n.t('Use Google Account')} disabled />
+              <FormControlLabel value="storageCustom" control={<Radio />} label={i18n.t('Custom Account')} />
 
               <TextField
                 required
@@ -167,7 +197,7 @@ class SettigsDialog extends React.Component {
               <TextField
                 required
                 id="password-required"
-                label="Network account password"
+                label={i18n.t('Network account password')}
                 name="accountPass"
                 value={this.state.accountPass}
                 onChange={this.handleChange}
@@ -182,15 +212,15 @@ class SettigsDialog extends React.Component {
 
           <Divider className={classes.dividerClass} />
 
-          
+
           <Button color="primary" onClick={this.handleImport}>
-            Import
+            {i18n.t('Import')}
           </Button>
           <Button color="primary" onClick={this.handleExport}>
-            Export
+            {i18n.t('Export')}
           </Button>
           <Button color="secondary" onClick={this.handleClearAll}>
-            Clear all saved data and users
+            {i18n.t('Clear all saved data and users')}
           </Button>
 
           <Divider className={classes.dividerClass} />
@@ -201,13 +231,13 @@ class SettigsDialog extends React.Component {
             color="primary"
             onClick={() => { this.props.onClose(); }}
           >
-            OK
+            {i18n.t('OK')}
           </Button>
           <Button
             color="primary"
             onClick={() => { this.props.onClose(); }}
           >
-            Cancel
+            {i18n.t('Cancel')}
           </Button>
         </DialogActions>
 
@@ -229,10 +259,12 @@ SettigsDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
   handleChangeSettings: PropTypes.func.isRequired,
+  handleChangeLanguage: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
   handleImportStorage: PropTypes.func.isRequired,
   handleExportStorage: PropTypes.func.isRequired,
   lightTheme: PropTypes.bool.isRequired,
+  lang: PropTypes.any,
 };
 
 export default withStyles(styles)(SettigsDialog);

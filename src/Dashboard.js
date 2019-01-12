@@ -157,7 +157,7 @@ class Dashboard extends React.Component {
   };
 
   handleLoginClose = value => {
-    if(value === 'addAccount') {
+    if(value === '@addProfile@') {
       this.setState({ openCreateUserDialog: true, });
     }
     else if(value != null && value !== this.props.currentUser) {
@@ -336,7 +336,9 @@ class Dashboard extends React.Component {
           open={this.state.openSettingsDialog}
           onClose={this.handleSettingsClose}
           lightTheme={this.props.lightTheme}
+          lang={this.props.lang}
           handleChangeSettings={this.props.onChangeTheme}
+          handleChangeLanguage={this.props.handleChangeLanguage}
           handleClearStorage={this.props.handleClearStorage}
           handleImportStorage={this.props.handleImportStorage}
           handleExportStorage={this.props.handleExportStorage}

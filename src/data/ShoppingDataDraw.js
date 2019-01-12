@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 //import DeleteIcon from '@material-ui/icons/Delete';
 import DoneIcon from '@material-ui/icons/Done';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
+import i18n from '../i18n';
 
 const styles = () => ({
     root: {
@@ -40,14 +41,14 @@ const SortableTableRow = SortableElement(({idx, row, removeItem, classes}) => {
                     color="primary"
                     className={classes.button}
                     onClick={() => removeItem(idx)}>
-                    Done
+                    {i18n.t('Done')}
                     <DoneIcon className={classes.rightIcon} />
                 </Button>
                 {/*<Button
                     color="secondary"
                     className={classes.button}
                     onClick={() => removeItem(idx)}>
-                    Delete
+                    {i18n.t('Delete')}
                     <DeleteIcon className={classes.rightIcon} />
                 </Button>*/}
             </TableCell>
@@ -89,9 +90,9 @@ class ShoppingDataDraw extends React.Component {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow className={classes.disableSelect}>
-                                <TableCell>Name</TableCell>
-                                <TableCell>Description</TableCell>
-                                <TableCell>Remove</TableCell>
+                                <TableCell>{i18n.t('Name')}</TableCell>
+                                <TableCell>{i18n.t('Description')}</TableCell>
+                                <TableCell>{i18n.t('Remove')}</TableCell>
                             </TableRow>
                         </TableHead>
 

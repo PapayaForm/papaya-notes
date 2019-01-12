@@ -10,6 +10,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import Paper from '@material-ui/core/Paper';
 import withStyles from '@material-ui/core/styles/withStyles';
+import i18n from './i18n';
+
 
 const styles = theme => ({
   paper: {
@@ -68,7 +70,7 @@ class SignIn extends React.Component {
 
   render() {
     const { classes, userToLogin, handleSignedIn, ...other } = this.props;
-    const textSignIn = '"' +  (userToLogin !== null ? userToLogin.email : '') + '"  - please sign in' 
+    const textSignIn = '"' +  (userToLogin !== null ? userToLogin.email : '') + '"' + i18n.t(' - please sign in'); 
 
     return (
       <Dialog onClose={this.handleClose} onExit={this.handleExit} onBackdropClick={this.handleBackdropClick} aria-labelledby="simple-dialog-title" {...other}>
@@ -82,7 +84,7 @@ class SignIn extends React.Component {
           
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="password">Password</InputLabel>
+              <InputLabel htmlFor="password">{i18n.t('Password')}</InputLabel>
               <Input 
                 name="password" 
                 type="password"
@@ -99,7 +101,7 @@ class SignIn extends React.Component {
               className={classes.submit}
               onClick={this.handleClickLogin}
             >
-              Sign in
+              {i18n.t('Sign in')}
             </Button>
           </form>
         </Paper>

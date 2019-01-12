@@ -7,6 +7,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
 import withStyles from '@material-ui/core/styles/withStyles';
+import i18n from '../i18n';
 
 const styles = theme => ({
   formdialog: {
@@ -44,13 +45,13 @@ class ShopingDataNewForm extends React.Component {
     return (
       <Dialog className={classes.formdialog} fullWidth={true} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
-          New data
+          {i18n.t('Add new item')}
         </DialogTitle>
         <DialogContent>
           <TextField
             required
             id="standard-required"
-            label="Name"
+            label={i18n.t('Name')}
             name="name"
             value={this.state.name}
             onChange={this.handleChange} 
@@ -60,7 +61,7 @@ class ShopingDataNewForm extends React.Component {
           />
           <TextField
             id="standard"
-            label="Description"
+            label={i18n.t('Description')}
             name="desc"
             value={this.state.desc}
             onChange={this.handleChange} 
@@ -75,13 +76,13 @@ class ShopingDataNewForm extends React.Component {
             onClick={this.handleAddItem}
             disabled={this.state.name === ''}
           >
-            Add item
+            {i18n.t('Add item')}
           </Button>
           <Button
             color="primary"
             onClick={() => {this.handleClose(); this.props.onClose();}}
           >
-            Cancel
+            {i18n.t('Cancel')}
           </Button>
         </DialogActions>
       </Dialog>

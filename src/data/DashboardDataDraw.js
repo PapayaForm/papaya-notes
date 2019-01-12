@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import DoneIcon from '@material-ui/icons/Done';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import { Divider } from '@material-ui/core';
+import i18n from '../i18n';
 
 const styles = theme => ({
     root: {
@@ -47,14 +48,14 @@ const SortableTableRow = SortableElement(({idx, tile, removeItem, classes}) => {
                         color="primary"
                         className={classes.button}
                         onClick={() => removeItem(idx)}>
-                        Done
+                        {i18n.t('Done')}
                         <DoneIcon className={classes.rightIcon} />
                     </Button>
                     {/*<Button
                         color="secondary"
                         className={classes.button}
                         onClick={() => removeItem(idx)}>
-                        Delete
+                        {i18n.t('Delete')}
                         <DeleteIcon className={classes.rightIcon} />
                     </Button>*/}
                 </CardActions>

@@ -7,6 +7,8 @@ import User from './data/User';
 import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-storage";
 import Category from './data/Category';
 import readLocalFiles from '@loopmode/read-local-files';
+import i18n from './i18n';
+
 
 
 class App extends Component {
@@ -18,6 +20,7 @@ class App extends Component {
       activeCategory: null,
       lightTheme: true,
       refresh: false,
+      lang: ''
     };
      // store the component's initial state to reset it
      this.initialState = this.state;
@@ -50,6 +53,11 @@ class App extends Component {
       }))
     }
     return true;
+  }
+
+  handleChangeLanguage = lang => {
+    i18n.changeLanguage(lang);
+    this.setState({ lang: lang });
   }
 
   handleClearStorage = () => {
@@ -113,13 +121,17 @@ class App extends Component {
     //activeCategory = Category.SerializeFromStorage(data.activeCategory);
     lightTheme = data.lightTheme;
 
-    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme});
+    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme });
 
     return true;
   }
 
   handleParentStateHydrated = () => {
     this.SetStateFromData(this.state);
+
+    //lang is restored just from local-state
+    if(this.state.lang !== '' && i18n.language !== this.state.lang)
+      i18n.changeLanguage(this.state.lang);
   }
 
   render() {
@@ -158,8 +170,10 @@ class App extends Component {
               onChangeActiveCategory = { this.handleChangeActiveCategory }
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
+              handleChangeLanguage = { this.handleChangeLanguage }
               handleImportStorage = { this.handleImportStorage }
               handleExportStorage = { this.handleExportStorage }
+              lang = { this.state.lang === '' ? i18n.language : this.state.lang }
               emails = { this.state.emails }
               currentUser = { this.state.currentUser }
               activeCategory = { this.state.activeCategory }

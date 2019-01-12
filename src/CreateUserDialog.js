@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
 import withStyles from '@material-ui/core/styles/withStyles';
+import i18n from './i18n';
 
 const styles = theme => ({
   avatar: {
@@ -54,7 +55,7 @@ class CreateUserDialog extends React.Component {
     return (
       <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
         <DialogTitle id="simple-dialog-title">
-          Create profile
+          {i18n.t('Create profile')}
         </DialogTitle>
         <DialogContent>
           <FormControl component="fieldset" className={classes.formControl}>
@@ -62,7 +63,7 @@ class CreateUserDialog extends React.Component {
               <TextField
                 required
                 id="standard-required"
-                label="User name"
+                label={i18n.t('User name')}
                 name="user"
                 value={this.state.user}
                 onChange={this.handleChange} 
@@ -72,7 +73,7 @@ class CreateUserDialog extends React.Component {
 
               <TextField
                 id="standard-password-input"
-                label="Password"
+                label={i18n.t('Password')}
                 name="password"
                 value={this.state.password}
                 onChange={this.handleChange} 
@@ -84,7 +85,7 @@ class CreateUserDialog extends React.Component {
 
               <TextField
                 id="standard-password-input-confirm"
-                label="Confirm Password"
+                label={i18n.t('Confirm Password')}
                 name="passwordConfirm"
                 value={this.state.passwordConfirm}
                 onChange={this.handleChange} 
@@ -109,13 +110,13 @@ class CreateUserDialog extends React.Component {
             onClick={this.handleClickCreateUser}
             disabled={this.state.user === '' || (this.state.password !== '' && this.state.password !== this.state.passwordConfirm)}
           >
-            Create Profile
+            {i18n.t('Create Profile')}
           </Button>
           <Button
             color="primary"
             onClick={() => {this.handleClose(); this.props.onClose();}}
           >
-            Cancel
+            {i18n.t('Cancel')}
           </Button>
         </DialogActions>
       </Dialog>

@@ -8,6 +8,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
+import i18n from './i18n';
 
 
 const styles = {
@@ -21,24 +22,24 @@ const styles = {
 const ManageMenu = props => {
     return (
         <div>
-            <ListSubheader inset>Notes management</ListSubheader>
+            <ListSubheader inset>{i18n.t('Notes management')}</ListSubheader>
             <ListItem disabled={props.disabled} button onClick={() => props.handleClickAddCategory()}>
                 <ListItemIcon>
                     <AddIcon />
                 </ListItemIcon>
-                <ListItemText primary="Add new category" />
+                <ListItemText primary={i18n.t('Add new category')} />
             </ListItem>
             <ListItem disabled={props.disabledDelete} button onClick={() => props.handleClickDeleteCategory()}>
                 <ListItemIcon>
                     <DeleteIcon />
                 </ListItemIcon>
-                <ListItemText primary="Delete category" />
+            <ListItemText primary={i18n.t('Delete category')} />
             </ListItem>
             <ListItem disabled={true} button onClick={() => props.handleClickManageCategory()}>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
-                <ListItemText primary="Manage" />
+                <ListItemText primary={i18n.t('Manage')} />
             </ListItem>
         </div>
     );

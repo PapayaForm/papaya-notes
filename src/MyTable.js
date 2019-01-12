@@ -6,6 +6,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import MenuIcon from '@material-ui/icons/Menu';
 import Tooltip from '@material-ui/core/Tooltip';
+import i18n from './i18n';
 
 const styles = theme => ({
   root: {
@@ -64,8 +65,8 @@ class MyTable extends React.Component {
     if (this.props.activeCategory === null) return null;
     else {
       const isNotEmptyList = this.props.activeCategory.dataItems.length > 0;
-      const tooltipAddText = 'Add new item to the shopping list';
-      //const tooltipStorageText = isNotEmptyList ? 'Items menu' : 'Items menu';
+      const tooltipAddText = i18n.t('Add new item to the shopping list');
+      //const tooltipStorageText = isNotEmptyList ? i18n.t('Items menu') : i18n.t('Items menu');
       return (
         <div>
           <CategoryDraw 

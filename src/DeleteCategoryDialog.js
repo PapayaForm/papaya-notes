@@ -8,7 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import MainMenuItems from './listMenuItems';
 import MessageBoxDialog from './MessageBoxDialog';
-
+import i18n from './i18n';
 
 
 const styles = theme => ({
@@ -43,8 +43,8 @@ class DeleteCategoryDialog extends React.Component {
 
   handleDelete = () => {
     if(this.state.activeDlgCategory !== null) {
-      let message = 'Do you really want to delete category: "' + this.state.activeDlgCategory.name + '"?';
-      this.setState({MessageBoxTitle: 'Confirm Delete', MessageBoxText: message, openMessageBox: true});
+      let message = i18n.t('Do you really want to delete category _parameter?', {parameter: this.state.activeDlgCategory.name});
+      this.setState({MessageBoxTitle: i18n.t('Confirm Delete'), MessageBoxText: message, openMessageBox: true});
     }
   };
 
@@ -53,7 +53,7 @@ class DeleteCategoryDialog extends React.Component {
       if(this.state.activeDlgCategory !== null) {
         if (this.props.handleDeleteCategory(this.state.activeDlgCategory)) {
           // show short message
-          let message = 'Category: "' + this.state.activeDlgCategory.name + '" deleted';
+          let message = i18n.t('Category _parameter deleted', {parameter: this.state.activeDlgCategory.name}); 
           this.props.handleShortInfoMessage(message);
           
           //set proper state
@@ -83,7 +83,7 @@ class DeleteCategoryDialog extends React.Component {
           aria-labelledby="scroll-dialog-title"
           {...other}
         >
-          <DialogTitle id="scroll-dialog-title">Select category to detele</DialogTitle>
+          <DialogTitle id="scroll-dialog-title">{i18n.t('Select category to detele')}</DialogTitle>
           <DialogContent>
             <MainMenuItems
             handleClickCategory = {this.handleClickCategory}
@@ -94,10 +94,10 @@ class DeleteCategoryDialog extends React.Component {
           <div className={classes.topmargin}>
             <DialogActions>
               <Button onClick={this.handleDelete} disabled={this.state.activeDlgCategory === null} color="primary">
-                Delete
+                {i18n.t('Delete')}
               </Button>
               <Button onClick={this.handleClose} color="primary">
-                Cancel
+                {i18n.t('Cancel')}
               </Button>
             </DialogActions>
           </div>
