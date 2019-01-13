@@ -1,3 +1,7 @@
+import '../i18n';
+import i18n from '../i18n';
+
+
 const CategoriesEnum = Object.freeze({
     "eDashboard": 1,
     "eShopping": 2,
@@ -7,6 +11,29 @@ const CategoriesEnum = Object.freeze({
     "eIntegrations": 6,
     "eAssignment": 7,
 });
+
+
+const GetCategoryName = value => { 
+
+    switch(value) {
+        case CategoriesEnum.eDashboard:
+            return i18n.t('Dashboard');
+        case CategoriesEnum.eShopping:
+            return i18n.t('Shopping list');
+        case CategoriesEnum.ePeople:
+            return i18n.t('People');
+        case CategoriesEnum.eReports:
+            return i18n.t('Reports');
+        case CategoriesEnum.eCalendar:
+            return i18n.t('Calendar');
+        case CategoriesEnum.eIntegrations:
+            return i18n.t('Integrations');
+        case CategoriesEnum.eAssignment:
+            return i18n.t('Assignment');
+        default:
+            return '';
+        }
+}
 
 
 const ValidateCategory = value => { 
@@ -28,4 +55,4 @@ const ValidateCategory = value => {
 
 
 
-export {CategoriesEnum, ValidateCategory};
+export {CategoriesEnum, GetCategoryName, ValidateCategory};

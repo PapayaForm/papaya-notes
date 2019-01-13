@@ -14,8 +14,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import {CategoriesEnum} from './data/CategoriesEnum';
+import {GetCategoryName} from './data/CategoriesEnum';
 import CategoryIcon from './CategoryIcon';
 import {ValidateCategory} from './data/CategoriesEnum';
+import i18n from './i18n';
 
 
 
@@ -73,15 +75,15 @@ class AddCategoryDialog extends React.Component {
           aria-labelledby="form-dialog-title"
           {...other}
         >
-          <DialogTitle id="form-dialog-title">Add new category</DialogTitle>
+          <DialogTitle id="form-dialog-title">{i18n.t('Add new category')}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              You can add new category for notes and define its type.<br/>
+              {i18n.t('You can add new category for notes and define its type.')}
             </DialogContentText>
             <div className={classes.topmargin}>
             <form className={classes.root} autoComplete="off">
                 <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-simple">Category Type</InputLabel>
+                    <InputLabel htmlFor="age-simple">{i18n.t('Category Type')}</InputLabel>
                     <Select
                         value={this.state.categoryType}
                         onChange={this.handleChange}
@@ -93,13 +95,13 @@ class AddCategoryDialog extends React.Component {
                         <MenuItem value="">
                         <em>None</em>
                         </MenuItem>
-                        {MenuItemForCategory(CategoriesEnum.eDashboard, 'Dashboard')}
-                        {MenuItemForCategory(CategoriesEnum.eShopping, 'Shopping')}
-                        {MenuItemForCategory(CategoriesEnum.ePeople, 'People')}
-                        {MenuItemForCategory(CategoriesEnum.eReports, 'Reports')}
-                        {MenuItemForCategory(CategoriesEnum.eCalendar, 'Calendar')}
-                        {MenuItemForCategory(CategoriesEnum.eIntegrations, 'Integrations')}
-                        {MenuItemForCategory(CategoriesEnum.eAssignment, 'Assignment')}
+                        {MenuItemForCategory(CategoriesEnum.eDashboard, GetCategoryName(CategoriesEnum.eDashboard))}
+                        {MenuItemForCategory(CategoriesEnum.eShopping, GetCategoryName(CategoriesEnum.eShopping))}
+                        {MenuItemForCategory(CategoriesEnum.ePeople, GetCategoryName(CategoriesEnum.ePeople))}
+                        {MenuItemForCategory(CategoriesEnum.eReports, GetCategoryName(CategoriesEnum.eReports))}
+                        {MenuItemForCategory(CategoriesEnum.eCalendar, GetCategoryName(CategoriesEnum.eCalendar))}
+                        {MenuItemForCategory(CategoriesEnum.eIntegrations, GetCategoryName(CategoriesEnum.eIntegrations))}
+                        {MenuItemForCategory(CategoriesEnum.eAssignment, GetCategoryName(CategoriesEnum.eAssignment))}
                     </Select>
                 </FormControl>
             </form>
@@ -110,7 +112,7 @@ class AddCategoryDialog extends React.Component {
               onChange={this.handleChange}
               margin="dense"
               id="name"
-              label="Category name"
+              label={i18n.t('Category name')}
               type="text"
               fullWidth
             />
@@ -121,12 +123,12 @@ class AddCategoryDialog extends React.Component {
               onClick={this.handleAdd}
               disabled={this.state.categoryName === '' || this.state.categoryType === ''}
               color="primary" >
-              Add Category
+              {i18n.t('Add Category')}
             </Button>
             <Button 
               onClick={this.handleClose}
               color="primary" >
-              Cancel
+              {i18n.t('Cancel')}
             </Button>
           </DialogActions>
         </Dialog>

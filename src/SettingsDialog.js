@@ -185,7 +185,7 @@ class SettigsDialog extends React.Component {
               <TextField
                 required
                 id="standard-required"
-                label="Network account name"
+                label={i18n.t('Network account name')}
                 name="accountName"
                 value={this.state.accountName}
                 onChange={this.handleChange}
