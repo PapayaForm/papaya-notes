@@ -107,14 +107,10 @@ class SettigsDialog extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleChangeLanguage = event => {
-    this.props.handleChangeLanguage(event.target.value);
-  };
-
 
   render() {
-    const { classes, handleChangeSettings, handleClearStorage, handleChangeLanguage,
-      handleImportStorage, handleExportStorage, lightTheme, lang, ...other } = this.props;
+    const { classes, handleChangeSettings, handleClearStorage, handleChangeLanguage, handleChangeFontSize, 
+      handleImportStorage, handleExportStorage, lightTheme, lang, fontSize, ...other } = this.props;
 
     return (
       <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
@@ -140,6 +136,23 @@ class SettigsDialog extends React.Component {
             </FormGroup>
           </FormControl>
 
+          <br />
+
+          <FormControl component="fieldset" className={classes.formControl}>
+            <FormHelperText>{i18n.t('Font Size')}</FormHelperText>
+            <RadioGroup
+              aria-label="FontSize"
+              name="fontSize1"
+              className={classes.group}
+              value={this.props.fontSize.toString()}
+              onChange={(event) => {this.props.handleChangeFontSize(Number(event.target.value));}}
+            >
+              <FormControlLabel value="16" control={<Radio />} label={i18n.t('Normal')} />
+              <FormControlLabel value="18" control={<Radio />} label={i18n.t('Medium')} />
+              <FormControlLabel value="20" control={<Radio />} label={i18n.t('Small')} />
+            </RadioGroup>
+          </FormControl>
+
           <br/>
 
           <FormControl fullWidth={true} component="fieldset" className={classes.formControl}>
@@ -147,7 +160,7 @@ class SettigsDialog extends React.Component {
             <Select
               fullWidth={true}
               value={this.props.lang}
-              onChange={this.handleChangeLanguage}
+              onChange={(event) => {this.props.handleChangeLanguage(event.target.value);} }
               inputProps={{
                 name: 'lang',
                 id: 'lang-simple',
@@ -161,6 +174,8 @@ class SettigsDialog extends React.Component {
               </MenuItem>
             </Select>
           </FormControl>
+
+          
 
           <Divider className={classes.dividerClass} />
 
@@ -260,11 +275,13 @@ SettigsDialog.propTypes = {
   onClose: PropTypes.func,
   handleChangeSettings: PropTypes.func.isRequired,
   handleChangeLanguage: PropTypes.func.isRequired,
+  handleChangeFontSize: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
   handleImportStorage: PropTypes.func.isRequired,
   handleExportStorage: PropTypes.func.isRequired,
   lightTheme: PropTypes.bool.isRequired,
-  lang: PropTypes.any,
+  lang: PropTypes.string.isRequired,
+  fontSize: PropTypes.number.isRequired,
 };
 
 export default withStyles(styles)(SettigsDialog);

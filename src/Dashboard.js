@@ -337,8 +337,10 @@ class Dashboard extends React.Component {
           onClose={this.handleSettingsClose}
           lightTheme={this.props.lightTheme}
           lang={this.props.lang}
+          fontSize={this.props.fontSize}
           handleChangeSettings={this.props.onChangeTheme}
           handleChangeLanguage={this.props.handleChangeLanguage}
+          handleChangeFontSize={this.props.handleChangeFontSize}
           handleClearStorage={this.props.handleClearStorage}
           handleImportStorage={this.props.handleImportStorage}
           handleExportStorage={this.props.handleExportStorage}
@@ -406,9 +408,13 @@ Dashboard.propTypes = {
   emails: PropTypes.array.isRequired,
   currentUser: PropTypes.object,
   activeCategory: PropTypes.object,
+  lang: PropTypes.string.isRequired,
+  fontSize: PropTypes.number.isRequired,
   lightTheme: PropTypes.bool.isRequired,
   handleCreateUser: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
+  handleChangeFontSize: PropTypes.func.isRequired,
+  handleChangeLanguage: PropTypes.func.isRequired,
   handleImportStorage: PropTypes.func.isRequired,
   handleExportStorage: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,

@@ -19,8 +19,9 @@ class App extends Component {
       currentUser: null,
       activeCategory: null,
       lightTheme: true,
+      fontsize: 16,
+      lang: '',
       refresh: false,
-      lang: ''
     };
      // store the component's initial state to reset it
      this.initialState = this.state;
@@ -28,6 +29,11 @@ class App extends Component {
 
   forceRefresh = () => {
     this.setState({refresh: !this.state.refresh});
+  }
+
+  handleChangeFontSize = fontsize => {
+    if(fontsize === 16 || fontsize === 18 || fontsize === 20)
+      this.setState({fontsize: fontsize});
   }
 
   handleChangeTheme = lightTheme => {
@@ -108,7 +114,6 @@ class App extends Component {
     let emails = [];
     let currentUser = null
     let activeCategory = null;
-    let lightTheme = true;
 
     if(data.emails && data.emails.length > 0) {
       for(let i = 0; i < data.emails.length; i++) {
@@ -119,17 +124,17 @@ class App extends Component {
     if(currentUser)
       activeCategory = Category.ReturnCategoryFromCollectionForGivenState(data.activeCategory, currentUser.categories)
     //activeCategory = Category.SerializeFromStorage(data.activeCategory);
-    lightTheme = data.lightTheme;
 
-    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory, lightTheme: lightTheme });
+    this.setState({ emails: emails, currentUser: currentUser, activeCategory: activeCategory });
 
     return true;
   }
 
   handleParentStateHydrated = () => {
+    // User Data settings are restoreded using common SetStateFromData function ...
     this.SetStateFromData(this.state);
 
-    //lang is restored just from local-state
+    // ... and UI Settings, like lang, theme and fontsize are restored just from local-state
     if(this.state.lang !== '' && i18n.language !== this.state.lang)
       i18n.changeLanguage(this.state.lang);
   }
@@ -142,6 +147,7 @@ class App extends Component {
         },
         typography: {
           useNextVariants: true,
+          htmlFontSize: this.state.fontsize,
         },
       }) : createMuiTheme({
         palette: {
@@ -154,6 +160,7 @@ class App extends Component {
         },
         typography: {
           useNextVariants: true,
+          htmlFontSize: this.state.fontsize,
         },
       })
 
@@ -171,6 +178,7 @@ class App extends Component {
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
               handleChangeLanguage = { this.handleChangeLanguage }
+              handleChangeFontSize = { this.handleChangeFontSize }
               handleImportStorage = { this.handleImportStorage }
               handleExportStorage = { this.handleExportStorage }
               lang = { this.state.lang === '' ? i18n.language : this.state.lang }
@@ -178,6 +186,7 @@ class App extends Component {
               currentUser = { this.state.currentUser }
               activeCategory = { this.state.activeCategory }
               lightTheme = { this.state.lightTheme }
+              fontSize = { this.state.fontsize }
             />
         </div>
       </MuiThemeProvider>
