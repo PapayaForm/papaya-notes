@@ -61,5 +61,11 @@
     "Font Size": "Rozmiar czcionki",
     "Normal": "Zwykły",
     "Medium": "Średni",
-    "Small": "Mały"
+    "Small": "Mały",
+    "Add list of new items to the shopping list in one shot": "Dodaj wiele elementów na raz do listy zakupów",
+    "Add new items": "Dodaj nowe elementy",
+    "This allows you to enter many items in one shot. Please enter...": "Mozesz tu dodać wiele elementów na raz. uzyj do tego przecinka: ',' albo słowa 'i' jako separatora. Na przykład: \"mleko, masło i chleb i cola\".",
+    "Add items": "Dodaj elementy",
+    "List of entities": "Lista elementów do dodania",
+    "separatorMulti": " i "
 }

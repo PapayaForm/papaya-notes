@@ -61,5 +61,11 @@
     "Font Size": "Font Size",
     "Normal": "Normal",
     "Medium": "Medium",
-    "Small": "Small"
+    "Small": "Small",
+    "Add list of new items to the shopping list in one shot": "Add list of new items to the shopping list in one shot",
+    "Add new items": "Add new items",
+    "This allows you to enter many items in one shot. Please enter...": "This allows you to enter many items in one shot. Please enter multiple names of items using ',' or 'and' as a separator. Example: \"milk, butter and bread and cola\".",
+    "Add items": "Add items",
+    "List of entities": "List of entities",
+    "separatorMulti": " and "
 }

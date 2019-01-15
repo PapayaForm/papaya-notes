@@ -26,7 +26,7 @@ const styles = theme => ({
         msUserSelect: 'none',
         margin: 10
     },
-    fabAdd:{}, fabMenu:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
+    fabAdd:{}, fabMenu:{}, fabMultiAdd:{} // TODO - should be removed, but without it it is a warning message.. don't know yet why..
   });
 
 

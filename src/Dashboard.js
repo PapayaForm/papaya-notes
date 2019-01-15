@@ -31,6 +31,8 @@ import DeleteCategoryDialog from './DeleteCategoryDialog';
 import ShortInfoMessage from './ShortInfoMessage';
 import CreateUserDialog from './CreateUserDialog';
 import CategoryDataNewForm from './data/CategoryDataNewForm';
+import CategoryDataMultiNewForm from './data/CategoryDataMultiNewForm';
+import i18n from './i18n';
 
 
 
@@ -114,6 +116,7 @@ class Dashboard extends React.Component {
     openSignInDialog: false,
     openAddCategoryDialog: false,
     openAddCategoryItemDialog: false,
+    openMultiAddCategoryItemDialog: false,
     openCreateUserDialog: false,
     openDeleteCategoryDialog: false,
     openShortInfoMessage: false,
@@ -194,6 +197,10 @@ class Dashboard extends React.Component {
     this.setState({ openAddCategoryItemDialog: true });
   };
 
+  handleMultiAddNewCategoryItemClick = () => {
+    this.setState({ openMultiAddCategoryItemDialog: true });
+  };
+
   handleAddCategoryDialogAddCategory = (name, type) => {
     if(name !== '' && ValidateCategory(type) && this.props.currentUser !== null)
     {
@@ -209,12 +216,29 @@ class Dashboard extends React.Component {
     }
   };
 
+  handleMultiAddCategoryItem = (textToParseAndAdd) => {
+    if(this.props.activeCategory !== null && textToParseAndAdd !== '') {
+      let text = textToParseAndAdd.replace(new RegExp(i18n.t("separatorMulti"), 'g'), ",");
+      text = text.trim();
+      let arr = text.split(",");
+      for(let i = 0; i < arr.length; i++) {
+        let name = arr[i].trim();
+        let desc = '';
+        this.props.activeCategory.AddData(name, desc);
+      }
+    }
+  };
+
   handleAddCategoryDialogClose = () => {
     this.setState({ openAddCategoryDialog: false, });
   };
 
   handleAddCategoryItemDialogClose = () => {
     this.setState({ openAddCategoryItemDialog: false, });
+  };
+
+  handleMultiAddCategoryItemDialogClose = () => {
+    this.setState({ openMultiAddCategoryItemDialog: false, });
   };
 
   handleClickDeleteCategory = () => {
@@ -383,6 +407,13 @@ class Dashboard extends React.Component {
           handleAddItem={this.handleAddCategoryItem}
           type = {this.props.activeCategory !== null ? this.props.activeCategory.type : null}
         />
+        <CategoryDataMultiNewForm
+          classes={this.classes}
+          open={this.state.openMultiAddCategoryItemDialog}
+          onClose={this.handleMultiAddCategoryItemDialogClose}
+          handleAddItem={this.handleMultiAddCategoryItem}
+          type = {this.props.activeCategory !== null ? this.props.activeCategory.type : null}
+        />
 
         <ShortInfoMessage
           classes={this.classes}
@@ -396,7 +427,8 @@ class Dashboard extends React.Component {
           <MyTable 
             classes = {this.classes}
             activeCategory = {this.props.activeCategory}
-            handleAddNewCategoryItemClick = {this.handleClickAddCategoryItem}/>
+            handleAddNewCategoryItemClick = {this.handleClickAddCategoryItem}
+            handleMultiAddNewCategoryItemClick = {this.handleMultiAddNewCategoryItemClick}/>
         </main>
       </div>
     );
