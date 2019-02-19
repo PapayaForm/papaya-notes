@@ -21,6 +21,7 @@ class CategoryDraw extends React.Component {
                         classes={classes} 
                         tableData={this.props.activeCategory.dataItems} 
                         removeItem={this.props.removeItem}
+                        restoreItem={this.props.restoreItem}
                         moveElemInArray={this.handleMoveElemInArray}/>
                 );
             case CategoriesEnum.eShopping:
@@ -29,6 +30,7 @@ class CategoryDraw extends React.Component {
                         classes={classes} 
                         tableData={this.props.activeCategory.dataItems} 
                         removeItem={this.props.removeItem}
+                        restoreItem={this.props.restoreItem}
                         moveElemInArray={this.handleMoveElemInArray}/>
                 ); 
             case CategoriesEnum.ePeople:

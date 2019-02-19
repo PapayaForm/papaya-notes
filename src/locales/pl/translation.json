@@ -11,6 +11,8 @@
     "Add item": "Dodaj element",
     "Delete": "Usuń",
     "Remove": "Usuń",
+    "Restore": "Odzyskaj",
+    "Action": "Akcja",
     "Do you really want to delete category _parameter?": "Czy na pewno chcesz usunąć kategorię: \"{{parameter}}\"?",
     "Confirm Delete": "POtwierdź usunięcie",
     "Category _parameter deleted": "Kategoria: \"{{parameter}}\" została usunięta",

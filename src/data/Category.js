@@ -2,6 +2,7 @@ import DashboardData from './DashboardData';
 import ShoppingData from './ShoppingData';
 import {CategoriesEnum} from './CategoriesEnum'
 import {arrayMove} from 'react-sortable-hoc';
+import {DataStateEnum} from './Data';
 
 
 class Category {
@@ -12,14 +13,14 @@ class Category {
         this.dataItems = [];
     }
 
-    AddData(name, desc) {
+    AddData(name, desc, state = DataStateEnum.eActive) {
         let data = null;
         switch(this.type) {
             case CategoriesEnum.eDashboard:
-                data = new DashboardData(name, desc);
+                data = new DashboardData(name, desc, state);
                 break;
             case CategoriesEnum.eShopping:
-                data = new ShoppingData(name, desc);
+                data = new ShoppingData(name, desc, state);
                 break;
             case CategoriesEnum.ePeople:
             case CategoriesEnum.eReports:
@@ -37,7 +38,17 @@ class Category {
 
     DeleteData(idx) {
         if(idx >= 0 && idx < this.dataItems.length) {
-            this.dataItems.splice(idx, 1);
+            if(this.dataItems[idx].state === DataStateEnum.eActive)
+                this.dataItems[idx].state = DataStateEnum.eDone;
+            else if(this.dataItems[idx].state === DataStateEnum.eDone)
+                this.dataItems.splice(idx, 1);
+        }
+    }
+
+    RestoreData(idx) {
+        if(idx >= 0 && idx < this.dataItems.length) {
+            if(this.dataItems[idx].state === DataStateEnum.eDone)
+                this.dataItems[idx].state = DataStateEnum.eActive;
         }
     }
 
@@ -52,7 +63,7 @@ class Category {
             objectToInstantiate = new Category(objectState.name, objectState.type);
             if(objectState.dataItems && objectState.dataItems.length > 0) {
                 for (let i = 0; i < objectState.dataItems.length; i++) {
-                    objectToInstantiate.AddData(objectState.dataItems[i].name, objectState.dataItems[i].desc);
+                    objectToInstantiate.AddData(objectState.dataItems[i].name, objectState.dataItems[i].desc, objectState.dataItems[i].state);
                 }
             }
         }

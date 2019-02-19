@@ -11,6 +11,8 @@
     "Add item": "Add item",
     "Delete": "Delete",
     "Remove": "Remove",
+    "Restore": "Restore",
+    "Action": "Action",
     "Do you really want to delete category _parameter?":  "Do you really want to delete category: \"{{parameter}}\"?",
     "Confirm Delete": "Confirm Delete",
     "Category _parameter deleted": "Category: \"{{parameter}}\" deleted",

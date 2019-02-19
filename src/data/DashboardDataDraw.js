@@ -30,7 +30,7 @@ const styles = theme => ({
   });
 
 
-const SortableTableRow = SortableElement(({idx, tile, removeItem, classes}) => {
+const SortableTableRow = SortableElement(({idx, tile, removeItem, restoreItem, classes}) => {
     return (
         <GridListTile cols={tile.cols || 1}>
             <Card className={classes.disableSelect}>
@@ -66,7 +66,7 @@ const SortableTableRow = SortableElement(({idx, tile, removeItem, classes}) => {
 )
 
 
-const DashboardElementsList = SortableContainer(({tableData, classes, removeItem}) => {
+const DashboardElementsList = SortableContainer(({tableData, classes, removeItem, restoreItem}) => {
     const rows = tableData.map((tile, index) => {
         return (
             <SortableTableRow 
@@ -75,6 +75,7 @@ const DashboardElementsList = SortableContainer(({tableData, classes, removeItem
                 idx={index} 
                 tile={tile} 
                 removeItem={removeItem} 
+                restoreItem={restoreItem} 
                 classes={classes}/>
         );
     });
@@ -101,6 +102,7 @@ class DashboardDataDraw extends React.Component {
                     classes={classes}
                     tableData={this.props.tableData} 
                     removeItem={this.props.removeItem}
+                    restoreItem={this.props.restoreItem}
                     onSortEnd={this.onSortEnd}/>
             </div>
         );

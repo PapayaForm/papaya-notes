@@ -71,6 +71,13 @@ class MyTable extends React.Component {
     }
   }
 
+  handleRestoreItem = idx => {
+    if(this.props.activeCategory !== null) {
+      this.props.activeCategory.RestoreData(idx);
+      this.forceTableRefresh();
+    }
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -86,7 +93,8 @@ class MyTable extends React.Component {
           <CategoryDraw 
             classes={classes} 
             activeCategory={this.props.activeCategory} 
-            removeItem={this.handleRemoveItem}
+            removeItem={this.handleRemoveItem} 
+            restoreItem={this.handleRestoreItem}
             forceTableRefresh={this.forceTableRefresh}/>
             
           <Tooltip title={tooltipAddText}>

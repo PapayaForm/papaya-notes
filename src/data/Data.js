@@ -1,9 +1,16 @@
+const DataStateEnum = Object.freeze({
+    "eActive": 1,
+    "eDone": 2,
+});
+
+
 class Data {
 
-    constructor(name, type) {
+    constructor(name, type, state) {
         this.name = name;
         this.type = type;
+        this.state = state;
     }
 }
 
-export default Data;
+export { Data, DataStateEnum };
