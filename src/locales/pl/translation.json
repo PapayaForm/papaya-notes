@@ -10,11 +10,12 @@
     "Description": "Opis",
     "Add item": "Dodaj element",
     "Delete": "Usuń",
+    "Delete all": "Usuń wszytsko",
     "Remove": "Usuń",
     "Restore": "Odzyskaj",
     "Action": "Akcja",
     "Do you really want to delete category _parameter?": "Czy na pewno chcesz usunąć kategorię: \"{{parameter}}\"?",
-    "Confirm Delete": "POtwierdź usunięcie",
+    "Confirm Delete": "Potwierdź usunięcie",
     "Category _parameter deleted": "Kategoria: \"{{parameter}}\" została usunięta",
     "Select category to detele": "Wybierz kategorię do usunięcia",
     "Notes management": "Zarządzaj notatkami",
@@ -69,5 +70,6 @@
     "This allows you to enter many items in one shot. Please enter...": "Mozesz tu dodać wiele elementów na raz. uzyj do tego przecinka: ',' albo słowa 'i' jako separatora. Na przykład: \"mleko, masło i chleb i cola\".",
     "Add items": "Dodaj elementy",
     "List of entities": "Lista elementów do dodania",
-    "separatorMulti": " i "
+    "separatorMulti": " i ",
+    "Do you really want to delete all items?": "Czy na pewno chcesz usunąć wszytskie elmenety z listy?"
 }

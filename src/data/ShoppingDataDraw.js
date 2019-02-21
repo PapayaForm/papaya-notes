@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import RestoreIcon from '@material-ui/icons/Restore';
 import DoneIcon from '@material-ui/icons/Done';
+import MessageBoxDialog from './../MessageBoxDialog';
 import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import i18n from '../i18n';
 import { DataStateEnum } from './Data';
@@ -68,6 +69,8 @@ const SortableTableRow = SortableElement(({ isMainTable, idx, row, removeItem, r
                         {i18n.t('Restore')}
                         <RestoreIcon className={classes.rightIcon} />
                     </Button>
+                </TableCell>
+                <TableCell>
                     <Button
                         color="secondary"
                         className={classes.button}
@@ -106,12 +109,55 @@ const ShoppingElementsList = SortableContainer(({isMainTable, tableData, classes
     return <TableBody>{rows}</TableBody>;
 });
 
+const MessageBoxActionsEnum = Object.freeze({
+    "eNone": 0,
+    "eDeleteAllData": 1,
+  });
 
 class ShoppingDataDraw extends React.Component {
 
+    state = {
+        openMessageBox: false,
+        MessageBoxTitle: '',
+        MessageBoxText: '',
+        MessageBoxAction: MessageBoxActionsEnum.eNone,
+    };
+
+    handleMessageBoxClose = value => {
+        if (value === true) {
+            switch (this.state.MessageBoxAction) {
+                case MessageBoxActionsEnum.eDeleteAllData:
+                {
+                    for(let i =  this.props.tableData.length - 1; i >= 0; i--)
+                        if(this.props.tableData[i].state === DataStateEnum.eDone)
+                            this.props.removeItem(i);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+        this.setState({ MessageBoxAction: MessageBoxActionsEnum.eNone, openMessageBox: false });
+    };
+
+    onDeleteAll = () => {
+        let bIsSomethingToDelete = false;
+        for (let i = this.props.tableData.length - 1; i >= 0; i--) {
+            if (this.props.tableData[i].state === DataStateEnum.eDone) {
+                bIsSomethingToDelete = true;
+                break;
+            }
+        }
+        if(bIsSomethingToDelete) {
+            let action = MessageBoxActionsEnum.eDeleteAllData;
+            let message = i18n.t('Do you really want to delete all items?')
+            this.setState({ MessageBoxTitle: i18n.t('Confirm Delete'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
+        }
+    };
+    
     onSortEnd = ({oldIndex, newIndex}) => {
         this.props.moveElemInArray(oldIndex, newIndex);
-      };
+    };
 
     render() {
         const { classes } = this.props;
@@ -147,7 +193,18 @@ class ShoppingDataDraw extends React.Component {
                             <TableRow className={classes.disableSelect}>
                                 <TableCell>{i18n.t('Name')}</TableCell>
                                 <TableCell>{i18n.t('Description')}</TableCell>
-                                <TableCell>{i18n.t('Action')}</TableCell>
+                                <TableCell>
+                                    {i18n.t('Action')}
+                                </TableCell>
+                                <TableCell>
+                                    <Button
+                                        color="secondary"
+                                        className={classes.button}
+                                        onClick={() => this.onDeleteAll()}>
+                                        {i18n.t('Delete all')}
+                                        <DeleteIcon className={classes.rightIcon} />
+                                    </Button>
+                                </TableCell>
                             </TableRow>
                         </TableHead>
 
@@ -155,12 +212,20 @@ class ShoppingDataDraw extends React.Component {
                             pressDelay={200}
                             classes={classes}
                             isMainTable={false}
-                            tableData={this.props.tableData} 
+                            tableData={this.props.tableData}
                             removeItem={this.props.removeItem}
                             restoreItem={this.props.restoreItem}
-                            onSortEnd={this.onSortEnd}/>
+                            onSortEnd={this.onSortEnd} />
                     </Table>
                 </Paper>
+
+                <MessageBoxDialog
+                    classes={this.classes}
+                    open={this.state.openMessageBox}
+                    onClose={this.handleMessageBoxClose.bind(this)}
+                    dialogTitle={this.state.MessageBoxTitle}
+                    dialogMessage={this.state.MessageBoxText}
+                />
             </div>
         );
     }

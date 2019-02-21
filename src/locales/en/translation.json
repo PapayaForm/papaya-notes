@@ -10,6 +10,7 @@
     "Description": "Description",
     "Add item": "Add item",
     "Delete": "Delete",
+    "Delete all": "Delete all",
     "Remove": "Remove",
     "Restore": "Restore",
     "Action": "Action",
@@ -69,5 +70,6 @@
     "This allows you to enter many items in one shot. Please enter...": "This allows you to enter many items in one shot. Please enter multiple names of items using ',' or 'and' as a separator. Example: \"milk, butter and bread and cola\".",
     "Add items": "Add items",
     "List of entities": "List of entities",
-    "separatorMulti": " and "
+    "separatorMulti": " and ",
+    "Do you really want to delete all items?": "Do you really want to delete all items?"
 }
