@@ -34,7 +34,7 @@ const styles = () => ({
 const SortableTableRow = SortableElement(({ isMainTable, idx, row, removeItem, restoreItem, classes }) => {
     if (isMainTable) {
         return (
-            <TableRow className={classes.disableSelect}>
+            <TableRow className={classes.disableSelect} hover={true}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.desc}</TableCell>
                 <TableCell>
@@ -58,7 +58,7 @@ const SortableTableRow = SortableElement(({ isMainTable, idx, row, removeItem, r
     }
     else {
         return (
-            <TableRow className={classes.disableSelect}>
+            <TableRow className={classes.disableSelect} hover={true}>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.desc}</TableCell>
                 <TableCell>
@@ -200,6 +200,7 @@ class ShoppingDataDraw extends React.Component {
                                     <Button
                                         color="secondary"
                                         className={classes.button}
+                                        size="small"
                                         onClick={() => this.onDeleteAll()}>
                                         {i18n.t('Delete all')}
                                         <DeleteIcon className={classes.rightIcon} />
