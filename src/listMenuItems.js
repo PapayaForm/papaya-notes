@@ -5,6 +5,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CategoryIcon from './CategoryIcon';
+import Tooltip from '@material-ui/core/Tooltip';
+import {GetCategoryName} from './data/CategoriesEnum';
 
 
 const styles = {
@@ -20,22 +22,24 @@ const MainMenuItems = props => {
   const { categories } = props;
 
   return (
-  <div>
-    {categories !== null ? categories.map((n, idx) => {
-      return (
-        <ListItem 
-          key={idx} 
-          button onClick={() => props.handleClickCategory(n)}
-          selected = {activeCategory === n ? true : false}
-          >
-          <ListItemIcon>
-            {activeCategory === n ? (CategoryIcon(n.type, 'inherit')) : (CategoryIcon(n.type, null))}
-          </ListItemIcon>
-          <ListItemText primary={n.name}/>
-        </ListItem>
-      );
-    }) : ''}
-  </div>
+    <div>
+      {categories !== null ? categories.map((n, idx) => {
+        return (
+          <Tooltip title={GetCategoryName(n.type) + ': ' + n.name} placement='right-end'>
+            <ListItem
+              key={idx}
+              button onClick={() => props.handleClickCategory(n)}
+              selected={activeCategory === n ? true : false}
+            >
+              <ListItemIcon>
+                {activeCategory === n ? (CategoryIcon(n.type, 'inherit')) : (CategoryIcon(n.type, null))}
+              </ListItemIcon>
+              <ListItemText primary={n.name} />
+            </ListItem>
+          </Tooltip>
+        );
+      }) : ''}
+    </div>
   );
 }
 
