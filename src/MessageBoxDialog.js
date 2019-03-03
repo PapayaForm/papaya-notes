@@ -28,7 +28,7 @@ class MessageBoxDialog extends React.Component {
   };
 
   render() {
-    const { classes, dialogTitle, dialogMessage, ...other } = this.props;
+    const { classes, dialogTitle, dialogMessage, infoDialog, ...other } = this.props;
 
     return (
       <div>
@@ -49,9 +49,11 @@ class MessageBoxDialog extends React.Component {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              {i18n.t('Cancel')}
-            </Button>
+            {this.props.infoDialog === true ? ({}) : (
+              <Button onClick={this.handleClose} color="primary">
+                {i18n.t('Cancel')}
+              </Button>
+            )}
             <Button onClick={this.handleOKClose} color="primary">
               {i18n.t('OK')}
             </Button>
@@ -66,6 +68,7 @@ MessageBoxDialog.propTypes = {
     classes: PropTypes.object.isRequired,
     dialogMessage: PropTypes.string.isRequired,
     dialogTitle: PropTypes.string,
+    infoDialog: PropTypes.bool
   };
   
 export default withStyles(styles)(MessageBoxDialog);

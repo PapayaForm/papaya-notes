@@ -25,7 +25,7 @@ const MainMenuItems = props => {
     <div>
       {categories !== null ? categories.map((n, idx) => {
         return (
-          <Tooltip title={GetCategoryName(n.type) + ': ' + n.name} placement='right-end'>
+          <Tooltip key={idx} title={GetCategoryName(n.type) + ': ' + n.name} placement='right-end'>
             <ListItem
               key={idx}
               button onClick={() => props.handleClickCategory(n)}

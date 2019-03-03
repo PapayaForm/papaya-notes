@@ -71,5 +71,8 @@
     "Add items": "Add items",
     "List of entities": "List of entities",
     "separatorMulti": " and ",
-    "Do you really want to delete all items?": "Do you really want to delete all items?"
+    "Do you really want to delete all items?": "Do you really want to delete all items?",
+    "Login failed": "Login failed",
+    "Information": "Information",
+    "Login succeeded - from now you can share data with other devices using the same login": "Login succeeded - from now you can share data with other devices using the same login"
 }

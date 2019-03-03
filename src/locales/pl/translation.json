@@ -71,5 +71,8 @@
     "Add items": "Dodaj elementy",
     "List of entities": "Lista elementów do dodania",
     "separatorMulti": " i ",
-    "Do you really want to delete all items?": "Czy na pewno chcesz usunąć wszytskie elmenety z listy?"
+    "Do you really want to delete all items?": "Czy na pewno chcesz usunąć wszytskie elmenety z listy?",
+    "Login failed": "Logowanie się nie powiodło",
+    "Information": "Informacja",
+    "Login succeeded - from now you can share data with other devices using the same login": "Zalogowano się z powodzeniem - możesz odtąd współdzielić dane na wielu urządzeniach zalogowanych na to samo koonto"
 }

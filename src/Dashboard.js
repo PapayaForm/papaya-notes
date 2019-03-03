@@ -362,12 +362,17 @@ class Dashboard extends React.Component {
           lightTheme={this.props.lightTheme}
           lang={this.props.lang}
           fontSize={this.props.fontSize}
-          handleChangeSettings={this.props.onChangeTheme}
+          localStorageSettings={this.props.localStorageSettings}
+          accountNameSettings={this.props.accountNameSettings}
+          accountPassSettings={this.props.accountPassSettings}
+          handleChangeThemeSettings={this.props.onChangeTheme}
           handleChangeLanguage={this.props.handleChangeLanguage}
           handleChangeFontSize={this.props.handleChangeFontSize}
           handleClearStorage={this.props.handleClearStorage}
           handleImportStorage={this.props.handleImportStorage}
           handleExportStorage={this.props.handleExportStorage}
+          handleChangeStorageSettings={this.props.handleChangeStorageSettings}
+          handleValidateStorageSettings={this.props.handleValidateStorageSettings}
         />
         <LoginDialog
           currentUser={this.props.currentUser}
@@ -449,9 +454,14 @@ Dashboard.propTypes = {
   handleChangeLanguage: PropTypes.func.isRequired,
   handleImportStorage: PropTypes.func.isRequired,
   handleExportStorage: PropTypes.func.isRequired,
+  handleChangeStorageSettings: PropTypes.func.isRequired,
+  handleValidateStorageSettings: PropTypes.func.isRequired,
   onChangeTheme: PropTypes.func.isRequired,
   onChangeUser: PropTypes.func.isRequired,
   onChangeActiveCategory: PropTypes.func.isRequired,
+  localStorageSettings: PropTypes.string,
+  accountNameSettings: PropTypes.string,
+  accountPassSettings: PropTypes.string,
 };
 
 export default withStyles(styles)(Dashboard);

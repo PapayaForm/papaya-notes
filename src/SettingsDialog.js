@@ -40,15 +40,13 @@ const MessageBoxActionsEnum = Object.freeze({
   "eNone": 0,
   "eDeleteAllData": 1,
   "eImport": 2,
+  "eLogin": 3,
 });
 
 
-class SettigsDialog extends React.Component {
+class SettingsDialog extends React.Component {
 
   state = {
-    localStorage: 'storageLocal',
-    accountName: '',
-    accountPass: '',
     openMessageBox: false,
     MessageBoxTitle: '',
     MessageBoxText: '',
@@ -56,6 +54,7 @@ class SettigsDialog extends React.Component {
   };
 
   handleClose = () => {
+    this.props.handleValidateStorageSettings(false);
   };
 
   handleImport = () => {
@@ -73,6 +72,20 @@ class SettigsDialog extends React.Component {
     let message = i18n.t('Do you really want to delete all the data?');
     this.setState({ MessageBoxTitle: i18n.t('Confirm Delete'), MessageBoxText: message, MessageBoxAction: action, openMessageBox: true });
   };
+
+  handleSignItToStorage = () => {
+    if(this.props.handleValidateStorageSettings(true) === false) {
+      let action = MessageBoxActionsEnum.eLogin;
+      let message = i18n.t('Login failed');
+      this.setState({ MessageBoxTitle: i18n.t('Information'), MessageBoxText: message, MessageBoxAction: action, infoDialog: true, openMessageBox: true });
+    }
+    else {
+      let action = MessageBoxActionsEnum.eLogin;
+      let message = i18n.t('Login succeeded - from now you can share data with other devices using the same login');
+      this.setState({ MessageBoxTitle: i18n.t('Information'), MessageBoxText: message, MessageBoxAction: action, infoDialog: true, openMessageBox: true });
+    }
+
+  }
 
   handleMessageBoxClose = value => {
     if (value === true) {
@@ -95,6 +108,7 @@ class SettigsDialog extends React.Component {
             }
             break;
           }
+        case MessageBoxActionsEnum.eLogin:
         default:
           break;
       }
@@ -103,14 +117,11 @@ class SettigsDialog extends React.Component {
     this.setState({ MessageBoxAction: MessageBoxActionsEnum.eNone, openMessageBox: false });
   };
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
-
 
   render() {
-    const { classes, handleChangeSettings, handleClearStorage, handleChangeLanguage, handleChangeFontSize, 
-      handleImportStorage, handleExportStorage, lightTheme, lang, fontSize, ...other } = this.props;
+    const { classes, handleChangeThemeSettings, handleClearStorage, handleChangeLanguage, handleChangeFontSize, handleChangeStorageSettings,
+      handleImportStorage, handleExportStorage, lightTheme, lang, fontSize, localStorageSettings, accountNameSettings, accountPassSettings,
+      handleValidateStorageSettings, ...other } = this.props;
 
     return (
       <Dialog className={classes.formdialog} onClose={this.handleClose} onExit={this.handleClose} onBackdropClick={this.handleClose} aria-labelledby="simple-dialog-title" {...other}>
@@ -127,7 +138,7 @@ class SettigsDialog extends React.Component {
                   <Switch
                     name="darkTheme"
                     checked={!this.props.lightTheme}
-                    onChange={() => { this.props.handleChangeSettings(!this.props.lightTheme) }}
+                    onChange={() => { this.props.handleChangeThemeSettings(!this.props.lightTheme) }}
                     value="darkTheme"
                   />
                 }
@@ -188,41 +199,43 @@ class SettigsDialog extends React.Component {
             </FormHelperText>
             <RadioGroup
               aria-label="SavedData"
-              name="localStorage"
+              name="localStorageSettings"
               className={classes.group}
-              value={this.state.localStorage}
-              onChange={this.handleChange}
+              value={this.props.localStorageSettings}
+              onChange={this.props.handleChangeStorageSettings}
             >
               <FormControlLabel value="storageLocal" control={<Radio />} label={i18n.t('Local storage')} />
               <FormControlLabel value="storageGoogle" control={<Radio />} label={i18n.t('Use Google Account')} disabled />
               <FormControlLabel value="storageCustom" control={<Radio />} label={i18n.t('Custom Account')} />
-
-              <TextField
-                required
-                id="standard-required"
-                label={i18n.t('Network account name')}
-                name="accountName"
-                value={this.state.accountName}
-                onChange={this.handleChange}
-                className={classes.textField}
-                margin="normal"
-                fullWidth
-                disabled={this.state.localStorage !== 'storageCustom'}
-              />
-              <TextField
-                required
-                id="password-required"
-                label={i18n.t('Network account password')}
-                name="accountPass"
-                value={this.state.accountPass}
-                onChange={this.handleChange}
-                className={classes.textField}
-                margin="normal"
-                type="password"
-                fullWidth
-                disabled={this.state.localStorage !== 'storageCustom'}
-              />
             </RadioGroup>
+            <TextField
+              required
+              id="standard-required"
+              label={i18n.t('Network account name')}
+              name="accountNameSettings"
+              value={this.props.accountNameSettings}
+              onChange={this.props.handleChangeStorageSettings}
+              className={classes.textField}
+              margin="normal"
+              fullWidth
+              disabled={this.props.localStorageSettings !== 'storageCustom'}
+            />
+            <TextField
+              required
+              id="password-required"
+              label={i18n.t('Network account password')}
+              name="accountPassSettings"
+              value={this.props.accountPassSettings}
+              onChange={this.props.handleChangeStorageSettings}
+              className={classes.textField}
+              margin="normal"
+              type="password"
+              fullWidth
+              disabled={this.props.localStorageSettings !== 'storageCustom'}
+            />
+            <Button color="primary" name="signin" onClick={this.handleSignItToStorage} disabled={this.props.localStorageSettings !== 'storageCustom'}>
+              {i18n.t('Sign in')}
+            </Button>
           </FormControl>
 
           <Divider className={classes.dividerClass} />
@@ -270,10 +283,12 @@ class SettigsDialog extends React.Component {
   }
 }
 
-SettigsDialog.propTypes = {
+SettingsDialog.propTypes = {
   classes: PropTypes.object.isRequired,
   onClose: PropTypes.func,
-  handleChangeSettings: PropTypes.func.isRequired,
+  handleChangeThemeSettings: PropTypes.func.isRequired,
+  handleChangeStorageSettings: PropTypes.func.isRequired,
+  handleValidateStorageSettings: PropTypes.func.isRequired,
   handleChangeLanguage: PropTypes.func.isRequired,
   handleChangeFontSize: PropTypes.func.isRequired,
   handleClearStorage: PropTypes.func.isRequired,
@@ -282,6 +297,9 @@ SettigsDialog.propTypes = {
   lightTheme: PropTypes.bool.isRequired,
   lang: PropTypes.string.isRequired,
   fontSize: PropTypes.number.isRequired,
+  localStorageSettings: PropTypes.string,
+  accountNameSettings: PropTypes.string,
+  accountPassSettings: PropTypes.string,
 };
 
-export default withStyles(styles)(SettigsDialog);
+export default withStyles(styles)(SettingsDialog);

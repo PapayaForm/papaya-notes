@@ -8,6 +8,7 @@ import SimpleStorage, { clearStorage, resetParentState  } from "react-simple-sto
 import Category from './data/Category';
 import readLocalFiles from '@loopmode/read-local-files';
 import i18n from './i18n';
+//import firebase from './firebase/firebase.js';
 
 
 
@@ -22,6 +23,13 @@ class App extends Component {
       fontsize: 16,
       lang: '',
       refresh: false,
+      dbuser: '',
+      localStorage: 'storageLocal',
+      accountName: '',
+      accountPass: '',
+      localStorageSettings: 'storageLocal',
+      accountNameSettings: '',
+      accountPassSettings: '',
     };
      // store the component's initial state to reset it
      this.initialState = this.state;
@@ -66,6 +74,69 @@ class App extends Component {
     this.setState({ lang: lang });
   }
 
+  handleChangeStorageSettings = event => {
+    switch (event.target.name) {
+      case 'localStorageSettings':
+      case 'accountNameSettings':
+      case 'accountPassSettings':
+        this.setState({ [event.target.name]: event.target.value });
+        break;
+      default:
+        break;
+    }
+  }
+
+  handleValidateStorageSettings = applyFlag => {
+
+    let bRet = false;
+
+    if(applyFlag === true ) {
+      if(this.ValidateAccount(this.state.accountNameSettings, this.state.accountPassSettings)) {
+        this.setState({ 
+          localStorage: this.state.localStorageSettings, 
+          accountName: this.state.accountNameSettings, 
+          accountPass: this.state.accountPassSettings });
+
+        bRet = true;
+      } 
+      else {
+        this.setState({ 
+          localStorageSettings: this.state.localStorage, 
+          accountNameSettings: this.state.accountName, 
+          accountPassSettings: this.state.accountPass });
+          
+        bRet = false;
+      }
+    }
+    else
+    {
+      if(this.state.localStorage !== 'storageLocal' && this.state.localStorageSettings === 'storageLocal') {
+        //no login button pressed: we reset to std.
+        this.setState({ 
+          localStorage: 'storageLocal', 
+          accountPassSettings: '',
+          accountPass: ''
+         });
+
+        bRet = true;
+      }
+      if(this.state.localStorage === 'storageLocal' && this.state.localStorageSettings === 'storageCustom') {
+        //no login button pressed: we reset to std.
+        this.setState({ 
+          localStorageSettings: 'storageLocal', 
+          accountNameSettings: '', 
+          accountPassSettings: '',
+          accountName: '',
+          accountPass: ''
+         });
+
+        bRet = false;
+      }
+    }
+
+    return bRet;
+  }
+
   handleClearStorage = () => {
     console.log('clearStorage Called.');
     
@@ -108,6 +179,14 @@ class App extends Component {
   ValidateData = (data) => {
     // TODO 
     return true;
+  }
+
+  ValidateAccount = (login, pass) => {
+    // TODO 
+    if(login === 'Rafal')
+      return true;
+    
+    return false;
   }
 
   SetStateFromData = (data) => {
@@ -177,6 +256,8 @@ class App extends Component {
               onChangeActiveCategory = { this.handleChangeActiveCategory }
               handleCreateUser = { this.handleCreateUser }
               handleClearStorage = { this.handleClearStorage }
+              handleChangeStorageSettings = { this.handleChangeStorageSettings }
+              handleValidateStorageSettings = { this.handleValidateStorageSettings }
               handleChangeLanguage = { this.handleChangeLanguage }
               handleChangeFontSize = { this.handleChangeFontSize }
               handleImportStorage = { this.handleImportStorage }
@@ -187,6 +268,9 @@ class App extends Component {
               activeCategory = { this.state.activeCategory }
               lightTheme = { this.state.lightTheme }
               fontSize = { this.state.fontsize }
+              localStorageSettings = { this.state.localStorageSettings }
+              accountNameSettings = { this.state.accountNameSettings }
+              accountPassSettings = { this.state.accountPassSettings }
             />
         </div>
       </MuiThemeProvider>
